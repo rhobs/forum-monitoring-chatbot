@@ -1,0 +1,6 @@
+docs_dir: ./docs
+site_name: Forum Monitoring Focumentation
+
+nav:
+- Home: index.md
+- Known Issues: known_issues.md
