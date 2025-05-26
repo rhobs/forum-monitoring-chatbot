@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: forum-monitoring-chatbot
+  annotations:
+    github.com/project-slug: rhobs/forum-monitoring-chatbot
+spec:
+  type: other
+  lifecycle: unknown
