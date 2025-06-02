@@ -20,6 +20,7 @@ This `MonitoringStack` object can then discover the service and scrape the expos
 +
 .Example `MonitoringStack` object
 +
+
 ```yaml
 apiVersion: monitoring.rhobs/v1alpha1
 kind: MonitoringStack
@@ -32,33 +33,43 @@ spec:
   resourceSelector:
     matchLabels:
       k8s-app: prometheus-coo-example-monitor
+
 ```
 
 . Apply the `MonitoringStack` object by running the following command:
 +
+
 ```terminal
 $ oc apply -f example-coo-monitoring-stack.yaml
+
 ```
 
 . Verify that the `MonitoringStack` object is available by running the following command and inspecting the output:
 +
+
 ```terminal
 $ oc -n ns1-coo get monitoringstack
+
 ```
 +
 .Example output
+
 ```terminal
 NAME                         AGE
 example-coo-monitoring-stack   81m
+
 ```
 
 . Run the following comand to retrieve information about the active targets from Prometheus and filter the output to list only targets labeled with `app=prometheus-coo-example-app`. This verifies which targets are discovered and actively monitored by Prometheus with this specific label.
 +
+
 ```terminal
 $ oc -n ns1-coo exec -c prometheus prometheus-example-coo-monitoring-stack-0 -- curl -s 'http://localhost:9090/api/v1/targets' | jq '.data.activeTargets[].discoveredLabels | select(.__meta_kubernetes_endpoints_label_app=="prometheus-coo-example-app")'
+
 ```
 +
 .Example output
+
 ```json
 {
   "__address__": "10.129.2.25:8080",
@@ -104,9 +115,8 @@ $ oc -n ns1-coo exec -c prometheus prometheus-example-coo-monitoring-stack-0 -- 
   "__scrape_timeout__": "10s",
   "job": "serviceMonitor/ns1-coo/prometheus-coo-example-monitor/0"
 }
+
 ```
 +
-[NOTE]
-====
-The above example uses link:https://jqlang.github.io/jq/[`jq` command-line JSON processor] to format the output for convenience.
-====
+# [NOTE]
+# The above example uses link:https://jqlang.github.io/jq/[`jq` command-line JSON processor] to format the output for convenience.

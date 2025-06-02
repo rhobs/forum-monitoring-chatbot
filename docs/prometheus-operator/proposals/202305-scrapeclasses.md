@@ -1,11 +1,11 @@
 ## Scrape Classes
 
-* **Owners:**
+* __Owners:__
   * `nicolastakashi`
   * `eronwright`
-* **Status:**
+* __Status:__
   * `Implemented`
-* **Related Tickets:**
+* __Related Tickets:__
   * https://github.com/prometheus-operator/prometheus-operator/issues/4121
   * https://github.com/prometheus-operator/prometheus-operator/issues/3922
   * https://github.com/prometheus-operator/prometheus-operator/issues/5947
@@ -84,6 +84,7 @@ spec:
   - emptyDir:
       medium: Memory
     name: istio-certs
+
 ```
 
 Any object references in the scrape class definition are assumed to refer to objects in the namespace of the `Prometheus` object.
@@ -108,6 +109,7 @@ spec:
   podMetricsEndpoints:
   - port: http
     path: /metrics
+
 ```
 
 If the `Monitor` resource has a `tlsConfig` field defined, the Operator will use a merge strategy to combine the `tlsConfig` fields from the PodMonitor object with the `tlsConfig` fields of the scrape class, the `tlsConfig` fields in the `PodMonitor` resource take precedence.
@@ -121,6 +123,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: Probe
 spec:
   scrapeClassName: istio-mtls
+
 ```
 
 ### ServiceMonitor Resource
@@ -135,6 +138,7 @@ spec:
   endpoints:
   - port: http
     path: /metrics
+
 ```
 
 ### ScrapeConfig
@@ -154,6 +158,7 @@ spec:
     [...]
   fileSDConfig:
     [...]
+
 ```
 
 ## Test Plan
@@ -179,6 +184,7 @@ spec:
     certFile: "/etc/istio-certs/cert-chain.pem"
     keyFile: "/etc/istio-certs/key.pem"
     insecureSkipVerify: true
+
 ```
 
 Objections:
@@ -209,6 +215,7 @@ spec:
     certFile: "/etc/istio-certs/cert-chain.pem"
     keyFile: "/etc/istio-certs/key.pem"
     insecureSkipVerify: true
+
 ```
 
 An open question is whether the resource would be cluster-scoped or namespace-scoped.

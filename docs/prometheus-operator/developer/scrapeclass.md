@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: null
----
+## description: null
 
 ## Prerequisites
 
@@ -20,7 +19,7 @@ Before you begin, ensure that you have:
 
 ## Introduction
 
-`ScrapeClass` is a feature that allows you to define common configuration settings to be applied across all scrape resources( **PodMonitor**, **ServiceMonitor**, **ScrapeConfig** and **Probe** ). This feature is similar to [StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/) in Kubernetes and is very useful when it comes to standardising configurations such as common relabelling rules, TLS certificates and authentication.
+`ScrapeClass` is a feature that allows you to define common configuration settings to be applied across all scrape resources( __PodMonitor__, __ServiceMonitor__, __ScrapeConfig__ and __Probe__ ). This feature is similar to [StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/) in Kubernetes and is very useful when it comes to standardising configurations such as common relabelling rules, TLS certificates and authentication.
 
 One use-case is to configure authentication with TLS certificates when running `Prometheus` to scrape all the pods in an Istio mesh with [strict mTLS](https://istio.io/latest/docs/ops/integrations/prometheus/#tls-settings). Defining the TLS certificate paths in each `PodMonitor` and `ServiceMonitor` that scrapes these pods would be repetitive and error-prone. This problem is now solved by the `ScrapeClass` feature.
 
@@ -49,6 +48,7 @@ spec:
   - emptyDir:
       medium: Memory
     name: istio-certs
+
 ```
 
 An administrator can set the `default:true` so that the scrape applies to all scrape objects that don't configure an explicit scrape class. Only one scrape class can be set as default. If there are multiple default scrape classes, the operator will fail the reconciliation and the failure will be reported in the status conditions of the resource.
@@ -68,6 +68,7 @@ status:
     reason: "MultipleDefaultScrapeClasses"
     status: "False"
     type: Reconciled
+
 ```
 
 ## Using the ScrapeClass in Monitor Resources
@@ -84,6 +85,7 @@ spec:
   endpoints:
     - port: http
       path: /metrics
+
 ```
 
 If the monitor resource specifies a scrape class name that isn't defined in the `Prometheus/PrometheusAgent` object, then the operator will emit a Kubernetes event. Consider the following example where a `Prometheus` instance defines a scrapeClass, but a `ServiceMonitor` references a different one.
@@ -98,9 +100,10 @@ spec:
   scrapeClasses:
     - name: istio-mtls
       default: true
+
 ```
 
-The `ServiceMonitor` references a scrapeClass named **istio**, which is not defined in the Prometheus object.
+The `ServiceMonitor` references a scrapeClass named __istio__, which is not defined in the Prometheus object.
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
@@ -115,14 +118,17 @@ spec:
   endpoints:
     - port: http
       path: /metrics
+
 ```
 
 As `ServiceMonitor` references a scrapeClass that does not exist in Prometheus, the following event is emitted:
 
-```
-0s Warning InvalidConfiguration servicemonitor/example-service-monitor 
+
+
+```s Warning InvalidConfiguration servicemonitor/example-service-monitor 
 ServiceMonitor example-service-monitor was rejected due to invalid configuration: 
 scrapeClass "istio" not found in Prometheus scrapeClasses
+
 ```
 
 Similarly, we can select the scrape class for `PodMonitor` resource.
@@ -135,9 +141,10 @@ spec:
   podMetricsEndpoints:
   - port: http
     path: /metrics
+
 ```
 
-If a monitor resource includes a `tlsConfig` field, the Operator applies a **field-by-field** merge with the `tlsConfig` from the scrape class. Any fields set in the monitor resource take precedence, while unset fields inherit values from the scrape class.
+If a monitor resource includes a `tlsConfig` field, the Operator applies a __field-by-field__ merge with the `tlsConfig` from the scrape class. Any fields set in the monitor resource take precedence, while unset fields inherit values from the scrape class.
 
 > Note: The configuration in scrapeClass will only be applied if the scrape resources haven't set fields defined in scrapeClass.
 

@@ -23,18 +23,22 @@ Below we are making a simple "prometheus" config. Name this
 - job_name: "prometheus"
   static_configs:
   - targets: ["localhost:9090"]
+
 ```
 
 Then you will need to make a secret out of this configuration.
 
 ```sh
 kubectl create secret generic additional-scrape-configs --from-file=prometheus-additional.yaml --dry-run=client -oyaml > additional-scrape-configs.yaml
+
 ```
 
 Next, apply the generated kubernetes manifest
 
-```
-kubectl apply -f additional-scrape-configs.yaml -n monitoring
+
+
+```ubectl apply -f additional-scrape-configs.yaml -n monitoring
+
 ```
 
 Finally, reference this additional configuration in your `prometheus.yaml` CRD.
@@ -55,6 +59,7 @@ spec:
   additionalScrapeConfigs:
     name: additional-scrape-configs
     key: prometheus-additional.yaml
+
 ```
 
 NOTE: Use only one secret for ALL additional scrape configurations.

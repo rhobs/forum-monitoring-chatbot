@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: Getting started guide
----
+## description: Getting started guide
 
 This guide explains how to use `PodMonitor` and `ServiceMonitor` objects to monitor targets for a sample application.
 
@@ -55,6 +54,7 @@ spec:
         ports:
         - name: web
           containerPort: 8080
+
 ```
 
 ## Using ServiceMonitors
@@ -74,6 +74,7 @@ spec:
   ports:
   - name: web
     port: 8080
+
 ```
 
 Finally, we create a `ServiceMonitor` object that selects all Service objects
@@ -94,13 +95,15 @@ spec:
       app: example-app
   endpoints:
   - port: web
+
 ```
 
 Similarly, the Prometheus object defines which ServiceMonitors get selected with the
 `spec.serviceMonitorSelector` field.
 
-```
-apiVersion: monitoring.coreos.com/v1
+
+
+```piVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
   name: prometheus
@@ -109,6 +112,7 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       team: frontend
+
 ```
 
 ## Using PodMonitors
@@ -128,13 +132,15 @@ spec:
       app: example-app
   podMetricsEndpoints:
   - port: web
+
 ```
 
 Similarly, the Prometheus object defines which PodMonitors get selected with the
 `spec.podMonitorSelector` field.
 
-```
-apiVersion: monitoring.coreos.com/v1
+
+
+```piVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
   name: prometheus
@@ -143,6 +149,7 @@ spec:
   podMonitorSelector:
     matchLabels:
       team: frontend
+
 ```
 
 ## What's Next

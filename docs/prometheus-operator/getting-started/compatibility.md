@@ -8,8 +8,7 @@ menu:
 lead: The Prometheus Operator supports a number of Kubernetes and Prometheus releases.
 images: []
 draft: false
-description: The Prometheus Operator supports a number of Kubernetes and Prometheus releases.
----
+## description: The Prometheus Operator supports a number of Kubernetes and Prometheus releases.
 
 It is recommended to use versions of the components identical or close to the versions used by the operator's end-to-end test suite (the specific version numbers are listed below).
 
@@ -23,6 +22,7 @@ The current version of the Prometheus operator uses the following Go client vers
 
 ```$ mdox-exec="go list -m  -f '{{ .Version }}' k8s.io/client-go"
 v0.33.1
+
 ```
 
 ## Prometheus
@@ -61,12 +61,14 @@ Prometheus Operator supports all Prometheus versions >= v2.0.0. The operator's e
 * v3.3.0
 * v3.3.1
 * v3.4.0
+
 ```
 
 The end-to-end tests are mostly tested against
 
 ```$ mdox-exec="go run ./cmd/po-docgen/. compatibility defaultPrometheusVersion"
 * v3.4.0
+
 ```
 
 ## Alertmanager
@@ -77,6 +79,7 @@ The end-to-end tests are mostly tested against
 
 ```$ mdox-exec="go run ./cmd/po-docgen/. compatibility defaultAlertmanagerVersion"
 * v0.28.1
+
 ```
 
 ## Thanos
@@ -87,4 +90,5 @@ The end-to-end tests are mostly tested against
 
 ```$ mdox-exec="go run ./cmd/po-docgen/. compatibility defaultThanosVersion"
 * v0.38.0
+
 ```

@@ -2,9 +2,7 @@
 [id="understanding-metrics_{context}"]
 # Understanding metrics
 
-
 In OpenShift ,
-
 
 In OpenShift,
 
@@ -16,9 +14,11 @@ In OpenShift, metrics are exposed through an HTTP service endpoint under the `/m
 
 ```terminal
 $ curl http://<example_app_endpoint>/metrics
+
 ```
 
 .Example output
+
 ```terminal
 # HELP http_requests_total Count of all HTTP requests
 # TYPE http_requests_total counter
@@ -27,4 +27,5 @@ http_requests_total{code="404",method="get"} 2
 # HELP version Version information about this binary
 # TYPE version gauge
 version{version="v0.1.0"} 1
+
 ```

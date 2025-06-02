@@ -11,7 +11,5 @@ When creating a silence, you must specify whether it becomes active immediately 
 
 After you create silences, you can view, edit, and expire them.
 
-[NOTE]
-====
-When you create silences, they are replicated across Alertmanager pods. However, if you do not configure persistent storage for Alertmanager, silences might be lost. This can happen, for example, if all Alertmanager pods restart at the same time.
-====
+# [NOTE]
+# When you create silences, they are replicated across Alertmanager pods. However, if you do not configure persistent storage for Alertmanager, silences might be lost. This can happen, for example, if all Alertmanager pods restart at the same time.

@@ -48,8 +48,6 @@ You can use {cmo-full} config map settings to manage monitoring-plugin resources
 
 All of the components in the monitoring stack are monitored by the stack and are automatically updated when OpenShift is updated.
 
-[NOTE]
-====
+# [NOTE]
 All components of the monitoring stack use the TLS security profile settings that are centrally configured by a cluster administrator.
-If you configure a monitoring stack component that uses TLS security settings, the component uses the TLS security profile settings that already exist in the `tlsSecurityProfile` field in the global OpenShift `apiservers.config.openshift.io/cluster` resource.
-====
+# If you configure a monitoring stack component that uses TLS security settings, the component uses the TLS security profile settings that already exist in the `tlsSecurityProfile` field in the global OpenShift `apiservers.config.openshift.io/cluster` resource.

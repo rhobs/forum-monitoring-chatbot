@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: Alerting guide
----
+## description: Alerting guide
 
 This guide assumes you already have a basic understanding of the Prometheus Operator and have gone through the [Getting Started]({{< ref "getting-started" >}}) guide. We’re also expecting you to know how to run an Alertmanager instance.
 
@@ -18,8 +17,8 @@ In this guide, we'll explore the various methods for managing Alertmanager confi
 Prometheus' configuration also includes "rule files", which contain the
 [alerting
 rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/).
-When an alerting rule is triggered, it fires that alert to ***all*** Alertmanager
-instances, on ***every*** rule evaluation interval. The Alertmanager instances
+When an alerting rule is triggered, it fires that alert to *__all__* Alertmanager
+instances, on *__every__* rule evaluation interval. The Alertmanager instances
 communicate to each other which notifications have already been sent out. For
 more information on this system design, see the [High Availability]({{< ref "high-availability" >}})
 page.
@@ -53,12 +52,14 @@ receivers:
 - name: 'webhook'
   webhook_configs:
   - url: 'http://example.com/'
+
 ```
 
 Save the above configuration in a file called `alertmanager.yaml` in the local directory and create a Secret from it:
 
 ```bash
 kubectl create secret generic alertmanager-example --from-file=alertmanager.yaml
+
 ```
 
 The Prometheus operator requires the Secret to be named like
@@ -82,6 +83,7 @@ data:
   alertmanager.yaml: {BASE64_CONFIG}
   template_1.tmpl: {BASE64_TEMPLATE_1}
   template_2.tmpl: {BASE64_TEMPLATE_2}
+
 ```
 
 Templates will be accessible to the Alertmanager container under the
@@ -91,6 +93,7 @@ configuration can reference them like this:
 ```yaml
 templates:
 - '/etc/alertmanager/config/*.tmpl'
+
 ```
 
 ### Using AlertmanagerConfig Resources
@@ -116,12 +119,14 @@ spec:
   - name: 'webhook'
     webhookConfigs:
     - url: 'http://example.com/'
+
 ```
 
 Create the AlertmanagerConfig resource in your cluster:
 
 ```bash
 curl -sL https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/user-guides/alerting/alertmanager-config-example.yaml | kubectl create -f -
+
 ```
 
 The `spec.alertmanagerConfigSelector` field in the Alertmanager resource
@@ -139,6 +144,7 @@ spec:
   alertmanagerConfigSelector:
     matchLabels:
       alertmanagerConfig: example
+
 ```
 
 ### Using AlertmanagerConfig for global configuration
@@ -157,6 +163,7 @@ spec:
   replicas: 3
   alertmanagerConfiguration:
     name: config-example
+
 ```
 
 The AlertmanagerConfig resource named `example-config` in namespace `default`
@@ -203,6 +210,7 @@ spec:
   ruleNamespaceSelector:
     matchLabels:
       team: frontend
+
 ```
 
 In case you want to select individual namespace by their name, you can use the
@@ -229,6 +237,7 @@ spec:
     rules:
     - alert: ExampleAlert
       expr: vector(1)
+
 ```
 
 For demonstration purposes, the PrometheusRule object always fires the

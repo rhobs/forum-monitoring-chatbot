@@ -5,12 +5,10 @@
 As a cluster administrator, you can create new alerting rules based on platform metrics.
 These alerting rules trigger alerts based on the values of chosen metrics.
 
-[NOTE]
-====
+# [NOTE]
 * If you create a customized `AlertingRule` resource based on an existing platform alerting rule, silence the original alert to avoid receiving conflicting alerts.
 
-* To help users understand the impact and cause of the alert, ensure that your alerting rule contains an alert message and severity value.
-====
+# * To help users understand the impact and cause of the alert, ensure that your alerting rule contains an alert message and severity value.
 
 .Prerequisites
 
@@ -24,6 +22,7 @@ These alerting rules trigger alerts based on the values of chosen metrics.
 . Add an `AlertingRule` resource to the YAML file.
 The following example creates a new alerting rule named `example`, similar to the default `Watchdog` alert:
 +
+
 ```yaml
 apiVersion: monitoring.openshift.io/v1
 kind: AlertingRule
@@ -41,6 +40,7 @@ spec:
         severity: warning # <5>
       annotations:
         message: This is an example alert. # <6>
+
 ```
 <1> Ensure that the namespace is `openshift-monitoring`.
 <2> The name of the alerting rule you want to create.
@@ -49,13 +49,13 @@ spec:
 <5> The severity that alerting rule assigns to the alert.
 <6> The message associated with the alert.
 +
-[IMPORTANT]
-====
-You must create the `AlertingRule` object in the `openshift-monitoring` namespace. Otherwise, the alerting rule is not accepted.
-====
+# [IMPORTANT]
+# You must create the `AlertingRule` object in the `openshift-monitoring` namespace. Otherwise, the alerting rule is not accepted.
 
 . Apply the configuration file to the cluster:
 +
+
 ```terminal
 $ oc apply -f example-alerting-rule.yaml
+
 ```

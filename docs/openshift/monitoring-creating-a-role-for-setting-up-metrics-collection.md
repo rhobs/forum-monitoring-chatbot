@@ -9,6 +9,7 @@ This procedure shows how to create a role that allows a user to set up metrics c
 
 . Fill the file with the configuration for the `monitor-crd-edit` role:
 +
+
 ```yaml
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -18,14 +19,17 @@ rules:
 - apiGroups: ["monitoring.coreos.com"]
   resources: ["prometheusrules", "servicemonitors", "podmonitors"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
 ```
 +
 This role enables a user to set up metrics collection for services.
 
 . Apply the configuration file to the cluster:
 +
+
 ```
 $ oc apply -f custom-metrics-role.yaml
+
 ```
 +
 Now the role is created.

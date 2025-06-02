@@ -14,12 +14,15 @@ You can allow users to create user-defined alert routing configurations that use
 
 . Edit the `cluster-monitoring-config` `ConfigMap` object:
 +
+
 ```terminal
 $ oc -n openshift-monitoring edit configmap cluster-monitoring-config
+
 ```
 +
 . Add `enableUserAlertmanagerConfig: true` in the `alertmanagerMain` section under `data/config.yaml`:
 +
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -32,6 +35,7 @@ data:
     alertmanagerMain:
       enableUserAlertmanagerConfig: true # <1>
     # ...
+
 ```
 <1> Set the `enableUserAlertmanagerConfig` value to `true` to allow users to create user-defined alert routing configurations that use the main platform instance of Alertmanager.
 +

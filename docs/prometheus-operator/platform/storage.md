@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: Storage considerations
----
+## description: Storage considerations
 
 By default, the operator configures Pods to store data on `emptyDir` volumes
 which aren't persisted when the Pods are redeployed. To maintain data across
@@ -36,6 +35,7 @@ metadata:
 provisioner: kubernetes.io/aws-ebs
 parameters:
   type: gp2
+
 ```
 
 > Note: Make sure that AWS as a cloud provider is properly configured with your cluster, or storage provisioning will not work.
@@ -65,6 +65,7 @@ spec:
         resources:
           requests:
             storage: 40Gi
+
 ```
 
 > The full documentation of the `storage` field can be found in the [API reference]({{< ref "api" >}}).
@@ -105,8 +106,7 @@ spec:
             app.kubernetes.io/name: my-example-prometheus
         resources:
           requests:
-            storage: 50Gi
----
+##             storage: 50Gi
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -121,6 +121,7 @@ spec:
   nfs:
     server: myServer
     path: "/path/to/prom/db"
+
 ```
 
 ### Disabling Default StorageClasses
@@ -153,6 +154,7 @@ provisioner: kubernetes.io/gce-pd
 parameters:
   type: pd-ssd
   zone: us-east1-d
+
 ```
 
 ## Resizing volumes
@@ -173,12 +175,14 @@ $ kubectl get storageclass -o custom-columns=NAME:.metadata.name,ALLOWVOLUMEEXPA
 NAME      ALLOWVOLUMEEXPANSION
 gp2-csi   true
 gp3-csi   true
+
 ```
 
 Next, update the `spec.paused` field to `true` (to prevent the operator from recreating the StatefulSet) and update the storage request in the `spec.storage` field of the custom resource. Assuming a Prometheus resource named `example` for which you want to increase the storage size to 10Gi:
 
 ```bash
 kubectl patch prometheus/example --patch '{"spec": {"paused": true, "storage": {"volumeClaimTemplate": {"spec": {"resources": {"requests": {"storage":"10Gi"}}}}}}}' --type merge
+
 ```
 
 Next, patch every PVC with the updated storage request (10Gi in this example):
@@ -187,18 +191,21 @@ Next, patch every PVC with the updated storage request (10Gi in this example):
 for p in $(kubectl get pvc -l operator.prometheus.io/name=example -o jsonpath='{range .items[*]}{.metadata.name} {end}'); do \
   kubectl patch pvc/${p} --patch '{"spec": {"resources": {"requests": {"storage":"10Gi"}}}}'; \
 done
+
 ```
 
 Next, delete the underlying StatefulSet using the `orphan` deletion strategy:
 
 ```bash
 kubectl delete statefulset -l operator.prometheus.io/name=example --cascade=orphan
+
 ```
 
 Last, change `spec.paused` field of the custom resource back to `false`.
 
 ```bash
 kubectl patch prometheus/example --patch '{"spec": {"paused": false}}' --type merge
+
 ```
 
 The operator should recreate the StatefulSet immediately, there will be no

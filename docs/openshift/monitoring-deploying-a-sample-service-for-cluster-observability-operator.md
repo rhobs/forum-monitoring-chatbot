@@ -13,12 +13,12 @@ The service exposes the custom `version` metric.
 
 . Create a YAML file named `prometheus-coo-example-app.yaml` that contains the following configuration details for a namespace, deployment, and service:
 +
+
 ```yaml
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ns1-coo
----
+##   name: ns1-coo
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,8 +39,7 @@ spec:
       containers:
       - image: ghcr.io/rhobs/prometheus-example-app:0.4.2
         imagePullPolicy: IfNotPresent
-        name: prometheus-coo-example-app
----
+##         name: prometheus-coo-example-app
 apiVersion: v1
 kind: Service
 metadata:
@@ -57,24 +56,31 @@ spec:
   selector:
     app: prometheus-coo-example-app
   type: ClusterIP
+
 ```
 
 . Save the file.
 
 . Apply the configuration to the cluster by running the following command:
 +
+
 ```terminal
 $ oc apply -f prometheus-coo-example-app.yaml
+
 ```
 
 . Verify that the pod is running by running the following command and observing the output:
 +
+
 ```terminal
 $ oc -n ns1-coo get pod
+
 ```
 +
 .Example output
+
 ```terminal
 NAME                                      READY     STATUS    RESTARTS   AGE
 prometheus-coo-example-app-0927545cb7-anskj   1/1       Running   0          81m
+
 ```

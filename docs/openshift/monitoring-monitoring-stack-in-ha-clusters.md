@@ -12,7 +12,6 @@ By default, in multi-node clusters, the following components run in high-availab
 * Metrics Server
 * Monitoring plugin
 
-
 The component is replicated across two pods, each running on a separate node. This means that the monitoring stack can tolerate the loss of one pod.
 
 Prometheus in HA mode::
@@ -25,9 +24,5 @@ Alertmanager in HA mode::
 * The two replicas synchronize notification and silence states with each other. This ensures that each notification is sent at least once.
 * If the replicas fail to communicate or if there is an issue on the receiving side, notifications are still sent, but they might be duplicated.
 
-[IMPORTANT]
-====
-Prometheus, Alertmanager, and Thanos Ruler are stateful components. To ensure high availability, you must configure them with persistent storage.
-====
-
-
+# [IMPORTANT]
+# Prometheus, Alertmanager, and Thanos Ruler are stateful components. To ensure high availability, you must configure them with persistent storage.

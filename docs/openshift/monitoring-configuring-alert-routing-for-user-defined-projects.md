@@ -6,10 +6,8 @@ If you are a non-administrator user who has been given the `alert-routing-edit` 
 
 .Prerequisites
 
-
 * A cluster administrator has enabled monitoring for user-defined projects.
 * A cluster administrator has enabled alert routing for user-defined projects.
-
 
 * Alert routing has been enabled for user-defined projects.
 
@@ -22,6 +20,7 @@ If you are a non-administrator user who has been given the `alert-routing-edit` 
 
 . Add an `AlertmanagerConfig` YAML definition to the file. For example:
 +
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1beta1
 kind: AlertmanagerConfig
@@ -36,14 +35,17 @@ spec:
   - name: default
     webhookConfigs:
     - url: https://example.org/post
+
 ```
 
 . Save the file.
 
 . Apply the resource to the cluster:
 +
+
 ```terminal
 $ oc apply -f example-app-alert-routing.yaml
+
 ```
 +
 The configuration is automatically applied to the Alertmanager pods.

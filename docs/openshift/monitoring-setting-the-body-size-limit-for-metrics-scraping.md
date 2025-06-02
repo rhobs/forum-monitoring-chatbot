@@ -8,11 +8,9 @@ In addition, by setting a body size limit, you can reduce the impact that a mali
 
 After you set a value for `enforcedBodySizeLimit`, the alert `PrometheusScrapeBodySizeLimitHit` fires when at least one Prometheus scrape target replies with a response body larger than the configured value.
 
-[NOTE]
-====
+# [NOTE]
 If metrics data scraped from a target has an uncompressed body size exceeding the configured size limit, the scrape fails.
-Prometheus then considers this target to be down and sets its `up` metric value to `0`, which can trigger the `TargetDown` alert.
-====
+# Prometheus then considers this target to be down and sets its `up` metric value to `0`, which can trigger the `TargetDown` alert.
 
 .Prerequisites
 
@@ -23,12 +21,15 @@ Prometheus then considers this target to be down and sets its `up` metric value 
 
 . Edit the `cluster-monitoring-config` `ConfigMap` object in the `openshift-monitoring` namespace:
 +
+
 ```terminal
 $ oc -n openshift-monitoring edit configmap cluster-monitoring-config
+
 ```
 
 . Add a value for `enforcedBodySizeLimit` to `data/config.yaml/prometheusK8s` to limit the body size that can be accepted per target scrape:
 +
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -39,6 +40,7 @@ data:
   config.yaml: |-
     prometheusK8s:
       enforcedBodySizeLimit: 40MB <1>
+
 ```
 <1> Specify the maximum body size for scraped metrics targets.
 This `enforcedBodySizeLimit` example limits the uncompressed size per target scrape to 40 megabytes.

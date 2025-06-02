@@ -7,10 +7,8 @@ You can use the `prometheus-adapter` resource to expose custom application metri
 
 * You have a custom Prometheus instance installed. In this example, it is presumed that Prometheus was installed in a user-defined `custom-prometheus` project.
 +
-[NOTE]
-====
-Custom Prometheus instances and the Prometheus Operator installed through Operator Lifecycle Manager (OLM) can cause issues with user-defined workload monitoring if it is enabled. Custom Prometheus instances are not supported in OpenShift.
-====
+# [NOTE]
+# Custom Prometheus instances and the Prometheus Operator installed through Operator Lifecycle Manager (OLM) can cause issues with user-defined workload monitoring if it is enabled. Custom Prometheus instances are not supported in OpenShift.
 +
 * You have deployed an application and a service in a user-defined project. In this example, it is presumed that the application and its service monitor were installed in a user-defined `custom-prometheus` project.
 * You have installed the OpenShift CLI (`oc`).
@@ -22,13 +20,13 @@ Custom Prometheus instances and the Prometheus Operator installed through Operat
 . Add configuration details for creating the service account, roles, and role bindings for `prometheus-adapter`:
 +
 [source,yaml,subs=quotes]
+
 ```
 kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: custom-metrics-apiserver
-  namespace: custom-prometheus
----
+##   namespace: custom-prometheus
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -37,8 +35,7 @@ rules:
 - apiGroups:
   - custom.metrics.k8s.io
   resources: ["\*"]
-  verbs: ["*"]
----
+##   verbs: ["*"]
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -52,8 +49,7 @@ rules:
   - services
   verbs:
   - get
-  - list
----
+##   - list
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -65,8 +61,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: custom-metrics-apiserver
-  namespace: custom-prometheus
----
+##   namespace: custom-prometheus
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -79,8 +74,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: custom-metrics-apiserver
-  namespace: custom-prometheus
----
+##   namespace: custom-prometheus
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -92,8 +86,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: custom-metrics-apiserver
-  namespace: custom-prometheus
----
+##   namespace: custom-prometheus
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -105,12 +98,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: horizontal-pod-autoscaler
-  namespace: kube-system
----
+##   namespace: kube-system
+
 ```
 
 . Add configuration details for the custom metrics for `prometheus-adapter`:
 +
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -129,8 +123,8 @@ data:
       name:
         matches: "^(.*)_total"
         as: "${1}_per_second" <2>
-      metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)'
----
+##       metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)'
+
 ```
 <1> Specifies the chosen metric to be the number of HTTP requests.
 <2> Specifies the frequency for the metric.
@@ -138,6 +132,7 @@ data:
 . Add configuration details for registering `prometheus-adapter` as an API service:
 +
 [source,yaml,subs=quotes]
+
 ```
 apiVersion: v1
 kind: Service
@@ -155,8 +150,7 @@ spec:
     targetPort: 6443
   selector:
     app: prometheus-adapter
-  type: ClusterIP
----
+##   type: ClusterIP
 apiVersion: apiregistration.k8s.io/v1beta1
 kind: APIService
 metadata:
@@ -169,18 +163,21 @@ spec:
   version: v1beta1
   insecureSkipTLSVerify: true
   groupPriorityMinimum: 100
-  versionPriority: 100
----
+##   versionPriority: 100
+
 ```
 
 . List the Prometheus Adapter image:
 +
+
 ```terminal
 $ oc get -n openshift-monitoring deploy/prometheus-adapter -o jsonpath="{..image}"
+
 ```
 
 . Add configuration details for deploying `prometheus-adapter`:
 +
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -233,16 +230,20 @@ spec:
           name: adapter-config
       - name: tmp-vol
         emptyDir: {}
+
 ```
 <1> Specifies the Prometheus Adapter image found in the previous step.
 
 . Apply the configuration to the cluster:
 +
+
 ```terminal
 $ oc apply -f deploy.yaml
+
 ```
 +
 .Example output
+
 ```terminal
 serviceaccount/custom-metrics-apiserver created
 clusterrole.rbac.authorization.k8s.io/custom-metrics-server-resources created
@@ -255,12 +256,15 @@ configmap/adapter-config created
 service/prometheus-adapter created
 apiservice.apiregistration.k8s.io/v1.custom.metrics.k8s.io created
 deployment.apps/prometheus-adapter created
+
 ```
 
 . Verify that the `prometheus-adapter` pod in your user-defined project is in a `Running` state. In this example the project is `custom-prometheus`:
 +
+
 ```terminal
 $ oc -n custom-prometheus get pods prometheus-adapter-<string>
+
 ```
 
 . The metrics for the application are now exposed and they can be used to configure horizontal pod autoscaling.

@@ -14,6 +14,8 @@ You can remove alerting rules for user-defined projects.
 
 * To remove rule `<alerting_rule>` in `<namespace>`, run the following:
 +
+
 ```terminal
 $ oc -n <namespace> delete prometheusrule <alerting_rule>
+
 ```

@@ -1,12 +1,12 @@
 # Zone aware sharding for Prometheus
 
-* **Owners:**
+* __Owners:__
   * [arnecls](https://github.com/arnecls)
-* **Status:**
+* __Status:__
   * `Accepted`
-* **Related Tickets:**
+* __Related Tickets:__
   * [#6437](https://github.com/prometheus-operator/prometheus-operator/issues/6437)
-* **Other docs:**
+* __Other docs:__
   * [Well known kubernetes labels](https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone)
   * [AWS zone names](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones)
   * [GCP zone names](https://cloud.google.com/compute/docs/regions-zones#available)
@@ -82,6 +82,7 @@ if zone_label == zones[prom_zone_idx] {
         do_scrape()
     }
 }
+
 ```
 
 By using modulo to calculate the `prom_zone_idx`, instances will be distributed
@@ -106,6 +107,7 @@ When `num_shards` is 10 and `len(zones)` is 3 as in `[A..C]`.
 0 1 2 | 3 4 5 | 6 7 8 | 9 | shard index
 A B C | A B C | A B C | A | zone
 0 0 0 | 1 1 1 | 2 2 2 | 0 | assignment index
+
 ```
 
 In this case the 2nd assert will warn about double scraping of instances in
@@ -118,6 +120,7 @@ When `num_shards` is 2 and `len(zones)` is 3 as in `[A..C]`.
 0 1   | shard index
 A B C | zone
 0 0 0 | assignment index
+
 ```
 
 In this case targets in zone C are not being scraped.
@@ -183,6 +186,7 @@ spec:
       # All topology values to be used by the cluster, i.e. a list of all
       # zones in use.
       values: []
+
 ```
 
 The `topology` section does not use the term `zone`. This will prevent API
@@ -227,6 +231,7 @@ spec:
   replicas: 2
   shardingStrategy:
     mode: 'Classic'
+
 ```
 
 we would get the following output for `shard_index == 2`
@@ -244,6 +249,7 @@ we would get the following output for `shard_index == 2`
 - source_labels: ['__tmp_hash']
   regex: '2'                    # shard_index
   action: 'keep'
+
 ```
 
 #### Topology mode
@@ -260,6 +266,7 @@ spec:
       values:
         - 'europe-west4-a'
         - 'europe-west4-b'
+
 ```
 
 we would get the following output for `shard_index == 2`:
@@ -291,6 +298,7 @@ we would get the following output for `shard_index == 2`:
 - source_labels: [ '__tmp_hash' ]
   regex: '1'                       # floor(shard_index / shards_per_zone)
   action: 'keep'
+
 ```
 
 > [!NOTE]
@@ -336,6 +344,7 @@ spec:
       values:
         - 'europe-west4-a'
         - 'europe-west4-b'
+
 ```
 
 The following snippet would be generated for `shared_index == 2`:
@@ -351,6 +360,7 @@ spec:
     'topology.kubernetes.io/zone': 'europe-west4-a'
     # Existing nodeSelectors will be kept
     'foo': 'bar'
+
 ```
 
 ## Alternatives

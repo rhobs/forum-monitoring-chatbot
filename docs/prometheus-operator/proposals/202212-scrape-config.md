@@ -77,6 +77,7 @@ ServiceMonitor --> prometheusConfig
 PodMonitor --> prometheusConfig
 ScrapeConfig --> prometheusConfig
 prometheusConfig
+
 ```
 
 Using a pseudo custom resource definition, we should have the following:
@@ -99,6 +100,7 @@ spec:
   relabelings: # relabel_configs
     - <RelabelConfig>[] # https://github.com/prometheus-operator/prometheus-operator/blob/e4e27052f57040f073c6c1e4aedaecaaec77d170/pkg/apis/monitoring/v1/types.go#L1150
   metricsPath: /metrics
+
 ```
 
 with the following new resources:
@@ -110,6 +112,7 @@ targets:
   - target:9100
 labels:
   labelA: placeholder
+
 ```
 
 * `fileSDConfig`:
@@ -121,6 +124,7 @@ files:
   # by ScrapeConfig. No validation on the content of the SD files is expected from prometheus-operator.
   - /etc/prometheus/configmaps/inventory/file.json
 refreshInterval: 5m
+
 ```
 
 * `httpSDConfig`:
@@ -128,6 +132,7 @@ refreshInterval: 5m
 ```yaml
 url: http://localhost:1234
 refreshInterval: 60s
+
 ```
 
 This example doesn't list all the fields that are offered by prometheus. The implementation of all the fields will be
@@ -141,6 +146,7 @@ Also, to help selecting `ScrapeConfig`, a new field will be added to the Prometh
 spec:
   scrapeConfigSelector: ...
   scrapeConfigNamespaceSelector: ...
+
 ```
 
 Once the CRD is released, we will start refactoring the other CRDs. Since `ScrapeConfig` will allow for any
@@ -152,6 +158,7 @@ ServiceMonitor --> ScrapeConfig
 PodMonitor --> ScrapeConfig
 ScrapeConfig --> prometheusConfig
 prometheusConfig
+
 ```
 
 # Alternatives

@@ -51,6 +51,7 @@ spec:
     secretKey:
       name: aws_access
       key: secret_key
+
 ```
 
 ```go
@@ -67,6 +68,7 @@ type RemoteWrite struct {
 
 	Spec monitoringv1.RemoteWriteSpec `json:"spec"`
 }
+
 ```
 
 ### Prometheus CRD
@@ -88,6 +90,7 @@ spec:
   # only.
   remoteWriteNamespaceSelector: {}
   ...
+
 ```
 
 #### Respect enforceNamespaceLabel and excludedFromEnforcement
@@ -103,6 +106,7 @@ write_relabel_configs:
   regex: <namespace>
   action: keep
   ...
+
 ```
 
 The item is inserted in the first position by the operator before any other user relabelings, so there's no way that users can have access to metrics labeled with namespaces other than the one in which the RemoteWrite object is created.
@@ -132,6 +136,7 @@ spec:
     queueConfig:
       capacity: 1024
       maxShards: 16
+
 ```
 
 ## PrometheusAgent CRD

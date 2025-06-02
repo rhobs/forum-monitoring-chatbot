@@ -15,15 +15,14 @@ This procedure shows how to create a `ServiceMonitor` object for a sample servic
 * You have installed the {coo-full}.
 * You have deployed the `prometheus-coo-example-app` sample service in the `ns1-coo` namespace.
 +
-[NOTE]
-====
-The `prometheus-coo-example-app` sample service does not support TLS authentication.
-====
+# [NOTE]
+# The `prometheus-coo-example-app` sample service does not support TLS authentication.
 
 .Procedure
 
 . Create a YAML file named `example-coo-app-service-monitor.yaml` that contains the following `ServiceMonitor` object configuration details:
 +
+
 ```yaml
 apiVersion: monitoring.rhobs/v1
 kind: ServiceMonitor
@@ -40,24 +39,31 @@ spec:
   selector:
     matchLabels:
       app: prometheus-coo-example-app
+
 ```
 +
 This configuration defines a `ServiceMonitor` object that the `MonitoringStack` object will reference to scrape the metrics data exposed by the `prometheus-coo-example-app` sample service.
 
 . Apply the configuration to the cluster by running the following command:
 +
+
 ```terminal
 $ oc apply -f example-coo-app-service-monitor.yaml
+
 ```
 
 . Verify that the `ServiceMonitor` resource is created by running the following command and observing the output:
 +
+
 ```terminal
 $ oc -n ns1-coo get servicemonitors.monitoring.rhobs
+
 ```
 +
 .Example output
+
 ```terminal
 NAME                         AGE
 prometheus-coo-example-monitor   81m
+
 ```

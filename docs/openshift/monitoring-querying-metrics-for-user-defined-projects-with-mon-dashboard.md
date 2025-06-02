@@ -8,13 +8,11 @@ As a developer, you must specify a project name when querying metrics. You must 
 
 The Metrics UI includes predefined queries, for example, CPU, memory, bandwidth, or network packet. These queries are restricted to the selected project. You can also run custom Prometheus Query Language (PromQL) queries for the project.
 
-[NOTE]
-====
+# [NOTE]
 Developers can only use the *Developer* perspective and not the *Administrator* perspective. As a developer, you can only query metrics for one project at a time.
 
 Developers cannot access the third-party UIs provided with OpenShift monitoring.
-
-====
+# 
 
 .Prerequisites
 
@@ -52,12 +50,10 @@ Use the keyboard arrows to select one of these suggested items and then press En
 
 . To run queries that you created, click *Run queries*. The metrics from the queries are visualized on the plot. If a query is invalid, the UI shows an error message.
 +
-[NOTE]
-====
+# [NOTE]
 * When drawing time series graphs, queries that operate on large amounts of data might time out or overload the browser. To avoid this, click *Hide graph* and calibrate your query by using only the metrics table. Then, after finding a feasible query, enable the plot to draw the graphs.
 
-* By default, the query table shows an expanded view that lists every metric and its current value. Click the *˅* down arrowhead to minimize the expanded view for a query.
-====
+# * By default, the query table shows an expanded view that lists every metric and its current value. Click the *˅* down arrowhead to minimize the expanded view for a query.
 
 . Optional: Save the page URL to use this set of queries again in the future.
 

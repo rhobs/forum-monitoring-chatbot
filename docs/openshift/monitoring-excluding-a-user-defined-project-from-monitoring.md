@@ -8,17 +8,19 @@ Individual user-defined projects can be excluded from user workload monitoring. 
 
 . Add the label to the project namespace:
 +
+
 ```terminal
 $ oc label namespace my-project 'openshift.io/user-monitoring=false'
+
 ```
 +
 . To re-enable monitoring, remove the label from the namespace:
 +
+
 ```terminal
 $ oc label namespace my-project 'openshift.io/user-monitoring-'
+
 ```
 +
-[NOTE]
-====
-If there were any active monitoring targets for the project, it may take a few minutes for Prometheus to stop scraping them after adding the label.
-====
+# [NOTE]
+# If there were any active monitoring targets for the project, it may take a few minutes for Prometheus to stop scraping them after adding the label.

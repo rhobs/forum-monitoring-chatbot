@@ -1,40 +1,27 @@
 :_mod-docs-content-type: PROCEDURE
 
-
-
-
 [id="silencing-alerts-adm_{context}"]
 # Silencing alerts from the Administrator perspective
 
-
-
 [id="silencing-alerts-dev_{context}"]
 # Silencing alerts from the Developer perspective
-
 
 You can silence a specific alert or silence alerts that match a specification that you define.
 
 .Prerequisites
 
-
 * You have access to the cluster as a user with the `cluster-admin` role.
 
-
-
-
 * If you are a cluster administrator, you have access to the cluster as a user with the `cluster-admin` role.
-
 
 * If you are a cluster administrator, you have access to the cluster as a user with the `dedicated-admin` role.
 
 * If you are a non-administrator user, you have access to the cluster as a user with the following user roles:
-** The `cluster-monitoring-view` cluster role, which allows you to access Alertmanager.
-** The `monitoring-alertmanager-edit` role, which permits you to create and silence alerts in the *Administrator* perspective in the web console.
+__ The `cluster-monitoring-view` cluster role, which allows you to access Alertmanager.
+__ The `monitoring-alertmanager-edit` role, which permits you to create and silence alerts in the *Administrator* perspective in the web console.
 ** The `monitoring-rules-edit` cluster role, which permits you to create and silence alerts in the *Developer* perspective in the web console.
 
-
 .Procedure
-
 
 To silence a specific alert:
 
@@ -44,10 +31,8 @@ To silence a specific alert:
 
 . Optional: Change the default configuration details for the silence.
 +
-[NOTE]
-====
-You must add a comment before saving a silence.
-====
+# [NOTE]
+# You must add a comment before saving a silence.
 
 . To save the silence, click *Silence*.
 
@@ -59,14 +44,10 @@ To silence a set of alerts:
 
 . On the *Create silence* page, set the schedule, duration, and label details for an alert.
 +
-[NOTE]
-====
-You must add a comment before saving a silence.
-====
+# [NOTE]
+# You must add a comment before saving a silence.
 
 . To create silences for alerts that match the labels that you entered, click *Silence*.
-
-
 
 To silence a specific alert:
 
@@ -82,10 +63,8 @@ To silence a specific alert:
 
 . Optional: Change the default configuration details for the silence.
 +
-[NOTE]
-====
-You must add a comment before saving a silence.
-====
+# [NOTE]
+# You must add a comment before saving a silence.
 
 . To save the silence, click *Silence*.
 
@@ -99,9 +78,7 @@ To silence a set of alerts:
 
 . On the *Create silence* page, set the duration and label details for an alert.
 +
-[NOTE]
-====
-You must add a comment before saving a silence.
-====
+# [NOTE]
+# You must add a comment before saving a silence.
 
 . To create silences for alerts that match the labels that you entered, click *Silence*.

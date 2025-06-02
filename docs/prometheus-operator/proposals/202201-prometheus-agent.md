@@ -165,6 +165,7 @@ spec:
   valueFrom:
   fieldRef:
   fieldPath: spec.nodeName
+
 ```
 
 ## Additional implementation details

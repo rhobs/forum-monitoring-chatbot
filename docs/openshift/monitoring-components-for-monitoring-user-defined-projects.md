@@ -4,8 +4,6 @@
 
 OpenShift
 
-
-
 includes an optional enhancement to the monitoring stack that enables you to monitor services and pods in user-defined projects. This feature includes the following components:
 
 .Components for monitoring user-defined projects
@@ -23,8 +21,6 @@ includes an optional enhancement to the monitoring stack that enables you to mon
 |Thanos Ruler
 |The Thanos Ruler is a rule evaluation engine for Prometheus that is deployed as a separate process. In OpenShift
 
-
-
 , Thanos Ruler provides rule and alerting evaluation for the monitoring of user-defined projects.
 
 |Alertmanager
@@ -32,11 +28,7 @@ includes an optional enhancement to the monitoring stack that enables you to mon
 
 |===
 
-
-[NOTE]
-====
-The components in the preceding table are deployed after monitoring is enabled for user-defined projects.
-====
-
+# [NOTE]
+# The components in the preceding table are deployed after monitoring is enabled for user-defined projects.
 
 All of these components are monitored by the stack and are automatically updated when OpenShift is updated.

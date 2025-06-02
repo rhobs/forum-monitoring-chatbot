@@ -9,9 +9,7 @@ Creating cross-project alerting rules for user-defined projects is enabled by de
 
 .Prerequisites
 
-
 * You have access to the cluster as a user with the `cluster-admin` cluster role.
-
 
 * You have access to the cluster as a user with the `dedicated-admin` role.
 
@@ -21,12 +19,15 @@ Creating cross-project alerting rules for user-defined projects is enabled by de
 
 . Edit the `cluster-monitoring-config` config map in the `openshift-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-monitoring edit configmap cluster-monitoring-config
+
 ```
 
 . In the `cluster-monitoring-config` config map, disable the option to create cross-project alerting rules by setting the `rulesWithoutLabelEnforcementAllowed` value under `data/config.yaml/userWorkload` to `false`:
 +
+
 ```yaml
 kind: ConfigMap
 apiVersion: v1
@@ -38,9 +39,7 @@ data:
     userWorkload:
       rulesWithoutLabelEnforcementAllowed: false
     # ...
+
 ```
 
 . Save the file to apply the changes.
-
-
-

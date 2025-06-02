@@ -8,8 +8,7 @@ menu:
 lead: Thanos and the Prometheus Operator.
 images: []
 draft: false
-description: Thanos and the Prometheus Operator.
----
+## description: Thanos and the Prometheus Operator.
 
 [Thanos](https://github.com/thanos-io/thanos/) is a set of components that can be composed into a highly available,
 multi Prometheus metric system with potentially unlimited storage capacity, if your Object Storage allows for it.
@@ -19,7 +18,7 @@ Before continuing with Prometheus Operator Thanos integration, it is recommended
 ## What does the Prometheus Operator help with?
 
 Prometheus Operator can manage:
-* the Thanos sidecar component with the `Prometheus` custom resource definition. Deployed within the Prometheus pod, it can hook into the Thanos querying system as well as **optionally** back up your data to object storage.
+* the Thanos sidecar component with the `Prometheus` custom resource definition. Deployed within the Prometheus pod, it can hook into the Thanos querying system as well as __optionally__ back up your data to object storage.
 * Thanos Ruler instances with the `ThanosRuler` custom resource definition.
 
 Other Thanos components such the Querier, the Receiver, the Compactor and the Store Gateway should be deployed independently of the Prometheus Operator and its Thanos configuration. The
@@ -38,6 +37,7 @@ spec:
   thanos:
     image: quay.io/thanos/thanos:v0.28.1
 ...
+
 ```
 
 ### Configuring Thanos Object Storage
@@ -56,12 +56,14 @@ config:
   endpoint: ams3.digitaloceanspaces.com
   access_key: XXX
   secret_key: XXX
+
 ```
 
 Let's assume you saved this file to `/tmp/thanos-config.yaml`. You can use the following command to create a secret called `thanos-objstore-config` inside your cluster in the `monitoring` namespace.
 
 ```sh
 kubectl -n monitoring create secret generic thanos-objstore-config --from-file=thanos.yaml=/tmp/thanos-config.yaml
+
 ```
 
 Then you can specify this secret inside the Thanos field of the Prometheus spec as mentioned [earlier](#prometheus-custom-resource-with-thanos-sidecar):
@@ -76,6 +78,7 @@ spec:
       key: thanos.yaml
       name: thanos-objstore-config
 ...
+
 ```
 
 This will attach Thanos sidecar that will backup all *new blocks* that Prometheus produces every 2 hours to the object storage.
@@ -106,6 +109,7 @@ spec:
   alertmanagersConfig:
     key: alertmanager-configs.yaml
     name: thanosruler-alertmanager-config
+
 ```
 
 More context for your Alertmanager configuration can be found in the [Thanos documentation](https://thanos.io/tip/components/rule.md/#alertmanager). An example:
@@ -121,12 +125,14 @@ stringData:
     - static_configs:
       - "dnssrv+_web._tcp.alertmanager-operated.monitoring.svc.cluster.local"
       api_version: v2
+
 ```
 
 Can be saved as `/tmp/alertmanager-configs.yaml`, and you can create in your namespace, for example `monitoring` as `thanosruler-alertmanager-config` imperatively with:
 
 ```sh
 kubectl -n monitoring create secret generic thanosruler-alertmanager-config --from-file=alertmanager-configs.yaml=/tmp/alertmanager-configs.yaml
+
 ```
 
 The recording and alerting rules used by a `ThanosRuler` component, are configured using the same `PrometheusRule` objects which are used by Prometheus. In the given example, the rules contained in any `PrometheusRule` object which match the label `role=my-thanos-rules` will be loaded by the Thanos Ruler pods.

@@ -26,4 +26,5 @@ data:
     metricsServer:
       audit:
         profile: Request
+
 ```

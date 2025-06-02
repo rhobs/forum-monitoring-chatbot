@@ -17,11 +17,6 @@ However, the rule cannot include metrics from a different `ns2` user-defined pro
 * To reduce latency and to minimize the load on core platform monitoring components, you can add the `openshift.io/prometheus-rule-evaluation-scope: leaf-prometheus` label to a rule.
 This label forces only the Prometheus instance deployed in the `openshift-user-workload-monitoring` project to evaluate the alerting rule and prevents the Thanos Ruler instance from doing so.
 +
-[IMPORTANT]
-====
+# [IMPORTANT]
 If an alerting rule has this label, your alerting rule can use only those metrics exposed by your user-defined project.
-Alerting rules you create based on default platform metrics might not trigger alerts.
-====
-
-
-
+# Alerting rules you create based on default platform metrics might not trigger alerts.

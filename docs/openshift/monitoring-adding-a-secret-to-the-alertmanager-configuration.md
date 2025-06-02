@@ -1,18 +1,13 @@
 [id="monitoring-adding-a-secret-to-the-alertmanager-configuration_{context}"]
 # Adding a secret to the Alertmanager configuration 
 
-
-
-
 :configmap-name: cluster-monitoring-config
 :namespace-name: openshift-monitoring
 :component: alertmanagerMain
 
-
 :configmap-name: user-workload-monitoring-config
 :namespace-name: openshift-user-workload-monitoring
 :component: alertmanager
-
 
 You can add secrets to the Alertmanager configuration by editing the `{configmap-name}` config map in the `{namespace-name}` project.
 
@@ -20,19 +15,14 @@ After you add a secret to the config map, the secret is mounted as a volume at `
 
 .Prerequisites
 
-
 * You have access to the cluster as a user with the `cluster-admin` cluster role.
 * You have created the `cluster-monitoring-config` config map.
-
-
 
 * You have access to the cluster as a user with the `cluster-admin` cluster role or as a user with the `user-workload-monitoring-config-edit` role in the `openshift-user-workload-monitoring` project.
 * A cluster administrator has enabled monitoring for user-defined projects.
 
-
 * You have access to the cluster as a user with the `dedicated-admin` role.
 * The `user-workload-monitoring-config` `ConfigMap` object exists. This object is created by default when the cluster is created.
-
 
 * You have created the secret to be configured in Alertmanager in the `{namespace-name}` project.
 * You have installed the OpenShift CLI (`oc`).
@@ -42,13 +32,16 @@ After you add a secret to the config map, the secret is mounted as a volume at `
 . Edit the `{configmap-name}` config map in the `{namespace-name}` project:
 +
 [source,terminal,subs="attributes+"]
+
 ```
 $ oc -n {namespace-name} edit configmap {configmap-name}
+
 ```
 
 . Add a `secrets:` section under `data/config.yaml/{component}` with the following configuration:
 +
 [source,yaml,subs="attributes+"]
+
 ```
 apiVersion: v1
 kind: ConfigMap
@@ -61,6 +54,7 @@ data:
       secrets: # <1>
       - <secret_name_1> # <2>
       - <secret_name_2>
+
 ```
 <1> This section contains the secrets to be mounted into Alertmanager. The secrets must be located within the same namespace as the Alertmanager object.
 <2> The name of the `Secret` object that contains authentication credentials for the receiver. If you add multiple secrets, place each one on a new line.
@@ -68,6 +62,7 @@ data:
 The following sample config map settings configure Alertmanager to use two `Secret` objects named `test-secret-basic-auth` and `test-secret-api-token`:
 +
 [source,yaml,subs="attributes+"]
+
 ```
 apiVersion: v1
 kind: ConfigMap
@@ -80,12 +75,11 @@ data:
       secrets:
       - test-secret-basic-auth
       - test-secret-api-token
+
 ```
 
 . Save the file to apply the changes. The new configuration is applied automatically.
 
-
 :!configmap-name:
 :!namespace-name:
 :!component:
-

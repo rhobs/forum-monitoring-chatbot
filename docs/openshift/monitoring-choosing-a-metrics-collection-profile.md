@@ -18,12 +18,15 @@ To choose a metrics collection profile for core OpenShift monitoring components,
 
 . Edit the `cluster-monitoring-config` `ConfigMap` object in the `openshift-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-monitoring edit configmap cluster-monitoring-config
+
 ```
 
 . Add the metrics collection profile setting under `data/config.yaml/prometheusK8s`:
 +
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -34,6 +37,7 @@ data:
   config.yaml: |
     prometheusK8s:
       collectionProfile: <metrics_collection_profile_name> <1>
+
 ```
 +
 <1> The name of the metrics collection profile.
@@ -43,6 +47,7 @@ If you do not specify a value or if the `collectionProfile` key name does not ex
 The following example sets the metrics collection profile to `minimal` for the core platform instance of Prometheus:
 +
 [source,yaml,subs=quotes]
+
 ```
 apiVersion: v1
 kind: ConfigMap
@@ -53,6 +58,7 @@ data:
   config.yaml: |
     prometheusK8s:
       collectionProfile: *minimal*
+
 ```
 
 . Save the file to apply the changes. The new configuration is applied automatically.

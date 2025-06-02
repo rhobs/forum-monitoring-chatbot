@@ -30,12 +30,14 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       team: frontend
+
 ```
 
 This can be verified with the following command:
 
 ```bash
 > kubectl get pods -n <namespace>
+
 ```
 
 The output is similar to this:
@@ -43,6 +45,7 @@ The output is similar to this:
 ```bash
 prometheus-prometheus-0                2/2     Running   1          10s
 prometheus-prometheus-1                1/2     Running   1          10s
+
 ```
 
 Deploy the example application and monitor it:
@@ -68,6 +71,7 @@ spec:
         ports:
         - name: web
           containerPort: 8080
+
 ```
 
 ```yaml mdox-exec="cat example/shards/example-app-service.yaml"
@@ -83,6 +87,7 @@ spec:
   ports:
   - name: web
     port: 8080
+
 ```
 
 ```yaml mdox-exec="cat example/shards/example-app-service-monitor.yaml"
@@ -98,12 +103,14 @@ spec:
       app: example-app
   endpoints:
   - port: web
+
 ```
 
 Explore one of the monitoring Prometheus instances:
 
 ```bash
 > kubectl port-forward pod/prometheus-prometheus-0 9090:9090
+
 ```
 
 We find the prometheus server scrapes three targets.
@@ -127,12 +134,14 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       team: frontend
+
 ```
 
 This can be verified with the following command:
 
 ```bash
 > kubectl get pods -n <namespace>
+
 ```
 
 The output is similar to this:
@@ -142,12 +151,14 @@ prometheus-prometheus-0                2/2     Running   1          11m
 prometheus-prometheus-1                2/2     Running   1          11m
 prometheus-prometheus-shard-1-0        2/2     Running   1          12s
 prometheus-prometheus-shard-1-1        2/2     Running   1          12s
+
 ```
 
 Explore one of the monitoring Prometheus instances added for sharding:
 
 ```bash
 > kubectl port-forward prometheus-prometheus-shard-1-0 9091:9090
+
 ```
 
 We find two targets are being scraped. The original Prometheus instance scrapes one target.

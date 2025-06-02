@@ -6,12 +6,9 @@ In the *Administrator* perspective, you can view dashboards relating to core Ope
 
 .Prerequisites
 
-
 * You have access to the cluster as a user with the `cluster-admin` cluster role.
 
-
 * You have access to the cluster as a user with the `dedicated-admin` role.
-
 
 .Procedure
 
@@ -21,9 +18,9 @@ In the *Administrator* perspective, you can view dashboards relating to core Ope
 
 . Optional: Select a time range for the graphs in the *Time Range* list.
 
-** Select a pre-defined time period.
+__ Select a pre-defined time period.
 
-** Set a custom time range by clicking *Custom time range* in the *Time Range* list.
+__ Set a custom time range by clicking *Custom time range* in the *Time Range* list.
 +
 .. Input or select the *From* and *To* dates and times.
 +

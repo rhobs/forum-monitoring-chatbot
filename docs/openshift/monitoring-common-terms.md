@@ -30,10 +30,8 @@ etcd is the key-value store for OpenShift, which stores the state of all resourc
 
 Fluentd::
 Fluentd is a log collector that resides on each OpenShift node. It gathers application, infrastructure, and audit logs and forwards them to different outputs.
-+
---
-include::snippets/logging-fluentd-dep-snip.adoc[]
---
+## +
+## include::snippets/logging-fluentd-dep-snip.adoc[]
 
 Kubelets::
 Runs on nodes and reads the container manifests. Ensures that the defined containers have started and are running.
@@ -84,9 +82,7 @@ storage::
 
 OpenShift supports many types of storage, both for on-premise and cloud providers.
 
-
 OpenShift supports many types of storage on AWS and GCP.
-
 
 OpenShift supports many types of storage on AWS.
 

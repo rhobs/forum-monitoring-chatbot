@@ -4,10 +4,8 @@
 
 You can configure alert routing through the OpenShift web console to ensure that you learn about important issues with your cluster. 
 
-[NOTE]
-====
-The OpenShift web console provides fewer settings to configure alert routing than the `alertmanager-main` secret. To configure alert routing with the access to more configuration settings, see "Configuring alert routing for default platform alerts".
-====
+# [NOTE]
+# The OpenShift web console provides fewer settings to configure alert routing than the `alertmanager-main` secret. To configure alert routing with the access to more configuration settings, see "Configuring alert routing for default platform alerts".
 
 .Prerequisites
 
@@ -17,10 +15,8 @@ The OpenShift web console provides fewer settings to configure alert routing tha
 
 . In the *Administrator* perspective, go to *Administration* -> *Cluster Settings* -> *Configuration* -> *Alertmanager*.
 +
-[NOTE]
-====
-Alternatively, you can go to the same page through the notification drawer. Select the bell icon at the top right of the OpenShift web console and choose *Configure* in the *AlertmanagerReceiverNotConfigured* alert.
-====
+# [NOTE]
+# Alternatively, you can go to the same page through the notification drawer. Select the bell icon at the top right of the OpenShift web console and choose *Configure* in the *AlertmanagerReceiverNotConfigured* alert.
 
 . Click *Create Receiver* in the *Receivers* section of the page.
 
@@ -48,10 +44,8 @@ Alternatively, you can go to the same page through the notification drawer. Sele
 +
 .. Add SMTP configuration details, including the address to send notifications from, the smarthost and port number used for sending emails, the hostname of the SMTP server, and authentication details.
 +
-[IMPORTANT]
-====
-Alertmanager requires an external SMTP server to send email alerts. To configure email alert receivers, ensure you have the necessary connection details for an external SMTP server.
-====
+# [IMPORTANT]
+# Alertmanager requires an external SMTP server to send email alerts. To configure email alert receivers, ensure you have the necessary connection details for an external SMTP server.
 +
 .. Select whether TLS is required.
 +

@@ -2,15 +2,11 @@
 [id="configuring-pod-topology-spread-constraints_{context}"]
 # Configuring pod topology spread constraints
 
-
-
-
 :configmap-name: cluster-monitoring-config
 :namespace-name: openshift-monitoring
 :component: prometheusK8s
 :component-name: Prometheus
 :label: prometheus
-
 
 :configmap-name: user-workload-monitoring-config
 :namespace-name: openshift-user-workload-monitoring
@@ -18,11 +14,9 @@
 :component-name: Thanos Ruler
 :label: thanos-ruler
 
-
 You can configure pod topology spread constraints for 
 
 all the pods deployed by the {cmo-full}
-
 
 all the pods for user-defined monitoring
 
@@ -33,20 +27,14 @@ You can configure pod topology spread constraints for monitoring pods by using t
 
 .Prerequisites
 
-
 * You have access to the cluster as a user with the `cluster-admin` cluster role.
 * You have created the `cluster-monitoring-config` `ConfigMap` object.
-
-
 
 * You have access to the cluster as a user with the `cluster-admin` cluster role or as a user with the `user-workload-monitoring-config-edit` role in the `openshift-user-workload-monitoring` project.
 * A cluster administrator has enabled monitoring for user-defined projects.
 
-
-
 * You have access to the cluster as a user with the `dedicated-admin` role.
 * The `user-workload-monitoring-config` `ConfigMap` object exists. This object is created by default when the cluster is created.
-
 
 * You have installed the OpenShift CLI (`oc`).
 
@@ -55,13 +43,16 @@ You can configure pod topology spread constraints for monitoring pods by using t
 . Edit the `{configmap-name}` config map in the `{namespace-name}` project:
 +
 [source,terminal,subs="attributes+"]
+
 ```
 $ oc -n {namespace-name} edit configmap {configmap-name}
+
 ```
 
 . Add the following settings under the `data/config.yaml` field to configure pod topology spread constraints:
 +
 [source,yaml,subs="attributes+"]
+
 ```
 apiVersion: v1
 kind: ConfigMap
@@ -77,6 +68,7 @@ data:
         whenUnsatisfiable: <value> # <4>
         labelSelector: # <5>
           <match_option>
+
 ```
 <1> Specify a name of the component for which you want to set up pod topology spread constraints.
 <2> Specify a numeric value for `maxSkew`, which defines the degree to which pods are allowed to be unevenly distributed.
@@ -92,6 +84,7 @@ Pods that match this label selector are counted to determine the number of pods 
 +
 .Example configuration for {component-name}
 [source,yaml,subs="attributes+"]
+
 ```
 apiVersion: v1
 kind: ConfigMap
@@ -113,10 +106,10 @@ data:
         labelSelector:
           matchLabels:
             app.kubernetes.io/name: {label}
+
 ```
 
 . Save the file to apply the changes. The pods affected by the new configuration are automatically redeployed.
-
 
 :!configmap-name:
 :!namespace-name:

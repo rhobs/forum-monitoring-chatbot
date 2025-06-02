@@ -4,12 +4,8 @@
 
 In OpenShift, you can view, edit, and remove alerting rules in user-defined projects.
 
-
-[IMPORTANT]
-====
-Managing alerting rules for user-defined projects is only available in OpenShift version 4.11 and later.
-====
-
+# [IMPORTANT]
+# Managing alerting rules for user-defined projects is only available in OpenShift version 4.11 and later.
 
 .Alerting rule considerations
 

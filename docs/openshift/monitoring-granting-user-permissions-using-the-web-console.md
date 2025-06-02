@@ -19,10 +19,8 @@ You can grant users permissions for the `openshift-monitoring` project or their 
 
 . In the *Namespace* field, select the project where you want to grant the access.
 +
-[IMPORTANT]
-====
-The monitoring role or cluster role permissions that you grant to a user by using this procedure apply only to the project that you select in the *Namespace* field.
-====
+# [IMPORTANT]
+# The monitoring role or cluster role permissions that you grant to a user by using this procedure apply only to the project that you select in the *Namespace* field.
 
 . Select a monitoring role or cluster role from the *Role Name* list.
 

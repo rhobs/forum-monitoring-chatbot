@@ -4,10 +4,8 @@
 
 For default platform monitoring in the `openshift-monitoring` project, you can enable the {cmo-first} to log all queries run by Thanos Querier.
 
-[IMPORTANT]
-====
-Because log rotation is not supported, only enable this feature temporarily when you need to troubleshoot an issue. After you finish troubleshooting, disable query logging by reverting the changes you made to the `ConfigMap` object to enable the feature.
-====
+# [IMPORTANT]
+# Because log rotation is not supported, only enable this feature temporarily when you need to troubleshoot an issue. After you finish troubleshooting, disable query logging by reverting the changes you made to the `ConfigMap` object to enable the feature.
 
 .Prerequisites
 
@@ -21,12 +19,15 @@ You can enable query logging for Thanos Querier in the `openshift-monitoring` pr
 
 . Edit the `cluster-monitoring-config` `ConfigMap` object in the `openshift-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-monitoring edit configmap cluster-monitoring-config
+
 ```
 +
 . Add a `thanosQuerier` section under `data/config.yaml` and add values as shown in the following example:
 +
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -40,8 +41,8 @@ data:
       logLevel: <value> <2>
 
 
-```
-<1> Set the value to `true` to enable logging and `false` to disable logging. The default value is `false`.
+
+```1> Set the value to `true` to enable logging and `false` to disable logging. The default value is `false`.
 <2> Set the value to `debug`, `info`, `warn`, or `error`. If no value exists for `logLevel`, the log level defaults to `error`.
 +
 . Save the file to apply the changes. The pods affected by the new configuration are automatically redeployed.
@@ -50,26 +51,29 @@ data:
 
 . Verify that the Thanos Querier pods are running. The following sample command lists the status of pods in the `openshift-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-monitoring get pods
+
 ```
 +
 . Run a test query using the following sample commands as a model:
 +
+
 ```terminal
 $ token=`oc create token prometheus-k8s -n openshift-monitoring`
 $ oc -n openshift-monitoring exec -c prometheus prometheus-k8s-0 -- curl -k -H "Authorization: Bearer $token" 'https://thanos-querier.openshift-monitoring.svc:9091/api/v1/query?query=cluster_version'
+
 ```
 . Run the following command to read the query log:
 +
+
 ```terminal
 $ oc -n openshift-monitoring logs <thanos_querier_pod_name> -c thanos-query
+
 ```
 +
-[NOTE]
-====
-Because the `thanos-querier` pods are highly available (HA) pods, you might be able to see logs in only one pod.
-====
+# [NOTE]
+# Because the `thanos-querier` pods are highly available (HA) pods, you might be able to see logs in only one pod.
 +
 . After you examine the logged query information, disable query logging by changing the `enableRequestLogging` value to `false` in the config map.
-

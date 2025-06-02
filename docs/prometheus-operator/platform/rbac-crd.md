@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: Aggregated roles on the Prometheus Operator CustomResourceDefinitions.
----
+## description: Aggregated roles on the Prometheus Operator CustomResourceDefinitions.
 
 ## Aggregated ClusterRoles
 
@@ -39,8 +38,7 @@ metadata:
 rules:
 - apiGroups: ["monitoring.coreos.com"]
   resources: ["alertmanagers", "alertmanagerconfigs", "prometheuses", "prometheusrules", "servicemonitors", "podmonitors", "probes"]
-  verbs: ["get", "list", "watch"]
----
+##   verbs: ["get", "list", "watch"]
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -52,4 +50,5 @@ rules:
 - apiGroups: ["monitoring.coreos.com"]
   resources: ["alertmanagers", "alertmanagerconfigs", "prometheuses", "prometheusrules", "servicemonitors", "podmonitors", "probes"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
 ```

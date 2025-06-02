@@ -8,19 +8,15 @@ This procedure shows you how to create a `ServiceMonitor` resource for a service
 
 .Prerequisites
 
-
 * You have access to the cluster as a user with the `cluster-admin` cluster role or the `monitoring-edit` cluster role.
 * You have enabled monitoring for user-defined projects.
-
 
 * You have access to the cluster as a user with the `dedicated-admin` role or the `monitoring-edit` role.
 
 * For this example, you have deployed the `prometheus-example-app` sample service in the `ns1` project.
 +
-[NOTE]
-====
-The `prometheus-example-app` sample service does not support TLS authentication.
-====
+# [NOTE]
+# The `prometheus-example-app` sample service does not support TLS authentication.
 
 .Procedure
 
@@ -28,6 +24,7 @@ The `prometheus-example-app` sample service does not support TLS authentication.
 
 . Add a `ServiceMonitor` resource to the YAML file. The following example creates a service monitor named `prometheus-example-monitor` to scrape metrics exposed by the `prometheus-example-app` service in the `ns1` namespace:
 +
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -42,32 +39,37 @@ spec:
   selector: #<3>
     matchLabels:
       app: prometheus-example-app
+
 ```
 <1> Specify a user-defined namespace where your service runs.
 <2> Specify endpoint ports to be scraped by Prometheus.
 <3> Configure a selector to match your service based on its metadata labels.
 +
-[NOTE]
-====
-A `ServiceMonitor` resource in a user-defined namespace can only discover services in the same namespace. That is, the `namespaceSelector` field of the `ServiceMonitor` resource is always ignored.
-====
+# [NOTE]
+# A `ServiceMonitor` resource in a user-defined namespace can only discover services in the same namespace. That is, the `namespaceSelector` field of the `ServiceMonitor` resource is always ignored.
 
 . Apply the configuration to the cluster:
 +
+
 ```terminal
 $ oc apply -f example-app-service-monitor.yaml
+
 ```
 +
 It takes some time to deploy the `ServiceMonitor` resource.
 
 . Verify that the `ServiceMonitor` resource is running:
 +
+
 ```terminal
 $ oc -n <namespace> get servicemonitor
+
 ```
 +
 .Example output
+
 ```terminal
 NAME                         AGE
 prometheus-example-monitor   81m
+
 ```

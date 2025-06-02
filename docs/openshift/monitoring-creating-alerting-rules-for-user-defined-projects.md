@@ -4,10 +4,8 @@
 
 You can create alerting rules for user-defined projects. Those alerting rules will trigger alerts based on the values of the chosen metrics.
 
-[NOTE]
-====
-To help users understand the impact and cause of the alert, ensure that your alerting rule contains an alert message and severity value.
-====
+# [NOTE]
+# To help users understand the impact and cause of the alert, ensure that your alerting rule contains an alert message and severity value.
 
 .Prerequisites
 
@@ -22,6 +20,7 @@ To help users understand the impact and cause of the alert, ensure that your ale
 . Add an alerting rule configuration to the YAML file.
 The following example creates a new alerting rule named `example-alert`. The alerting rule fires an alert when the `version` metric exposed by the sample service becomes `0`:
 +
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -39,6 +38,7 @@ spec:
         severity: warning # <4>
       annotations:
         message: This is an example alert. # <5>
+
 ```
 <1> The name of the alerting rule you want to create.
 <2> The duration for which the condition should be true before an alert is fired.
@@ -48,6 +48,8 @@ spec:
 
 . Apply the configuration file to the cluster:
 +
+
 ```terminal
 $ oc apply -f example-app-alerting-rule.yaml
+
 ```

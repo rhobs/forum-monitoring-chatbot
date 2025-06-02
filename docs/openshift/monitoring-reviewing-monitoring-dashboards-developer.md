@@ -4,10 +4,8 @@
 
 In the *Developer* perspective, you can view dashboards relating to a selected project.
 
-[NOTE]
-====
-In the *Developer* perspective, you can view dashboards for only one project at a time.
-====
+# [NOTE]
+# In the *Developer* perspective, you can view dashboards for only one project at a time.
 
 .Prerequisites
 
@@ -22,16 +20,14 @@ In the *Developer* perspective, you can view dashboards for only one project at 
 
 . Select a dashboard from the *Dashboard* drop-down list to see the filtered metrics.
 +
-[NOTE]
-====
-All dashboards produce additional sub-menus when selected, except *Kubernetes / Compute Resources / Namespace (Pods)*.
-====
+# [NOTE]
+# All dashboards produce additional sub-menus when selected, except *Kubernetes / Compute Resources / Namespace (Pods)*.
 +
 . Optional: Select a time range for the graphs in the *Time Range* list.
 
-** Select a pre-defined time period.
+__ Select a pre-defined time period.
 
-** Set a custom time range by clicking *Custom time range* in the *Time Range* list.
+__ Set a custom time range by clicking *Custom time range* in the *Time Range* list.
 +
 .. Input or select the *From* and *To* dates and times.
 +

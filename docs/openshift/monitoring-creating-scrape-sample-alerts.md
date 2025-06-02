@@ -18,6 +18,7 @@ You can create alerts that notify you when:
 
 . Create a YAML file with alerts that inform you when the targets are down and when the enforced sample limit is approaching. The file in this example is called `monitoring-stack-alerts.yaml`:
 +
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -47,6 +48,7 @@ spec:
       for: 10m #<10>
       labels:
         severity: warning #<11>
+
 ```
 <1> Defines the name of the alerting rule.
 <2> Specifies the user-defined project where the alerting rule is deployed.
@@ -62,8 +64,10 @@ spec:
 
 . Apply the configuration to the user-defined project:
 +
+
 ```terminal
 $ oc apply -f monitoring-stack-alerts.yaml
+
 ```
 
 . Additionally, you can check if a target has hit the configured limit:

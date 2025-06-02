@@ -3,8 +3,6 @@
 ifeval::["{context}" == "understanding-the-monitoring-stack"]
 :ocp-monitoring:
 
-
-
 # About OpenShift monitoring
 
 :ocp-monitoring!:
@@ -13,12 +11,9 @@ OpenShift includes a preconfigured, preinstalled, and self-updating monitoring s
 
 After installing OpenShift , cluster administrators can optionally enable *monitoring for user-defined projects*. By using this feature, cluster administrators, developers, and other users can specify how services and pods are monitored in their own projects. You can then query metrics, review dashboards, and manage alerting rules and silences for your own projects in the OpenShift web console.
 
-[NOTE]
-====
-Cluster administrators can grant developers and other users permission to monitor their own projects. Privileges are granted by assigning one of the predefined monitoring roles.
-====
+# [NOTE]
+# Cluster administrators can grant developers and other users permission to monitor their own projects. Privileges are granted by assigning one of the predefined monitoring roles.
 
 [id="about-openshift-monitoring_{context}"]
 ifeval::["{context}" == "understanding-the-monitoring-stack"]
 :!ocp-monitoring:
-

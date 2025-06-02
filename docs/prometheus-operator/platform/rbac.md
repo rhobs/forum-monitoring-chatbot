@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: Role-based access control for the Prometheus operator
----
+## description: Role-based access control for the Prometheus operator
 
 [Role-based access control](https://en.wikipedia.org/wiki/Role-based_access_control) (RBAC) for the Prometheus Operator involves two parts, RBAC rules for the Operator itself and RBAC rules for the Prometheus Pods themselves created by the Operator as Prometheus requires access to the Kubernetes API for target and Alertmanager discovery.
 
@@ -127,6 +126,7 @@ rules:
   - create
   - update
   - delete
+
 ```
 
 > Note: A cluster admin is required to create this `ClusterRole` and create a `ClusterRoleBinding` or `RoleBinding` to the `ServiceAccount` used by the Prometheus Operator `Pod`. The `ServiceAccount` used by the Prometheus Operator `Pod` can be specified in the `Deployment` object used to deploy it.
@@ -189,6 +189,7 @@ rules:
   verbs: ["get", "list", "watch"]
 - nonResourceURLs: ["/metrics"]
   verbs: ["get"]
+
 ```
 
 > Note: A cluster admin is required to create this `ClusterRole` and create a `ClusterRoleBinding` or `RoleBinding` to the `ServiceAccount` used by the Prometheus `Pod`s. The `ServiceAccount` used by the Prometheus `Pod`s can be specified in the `Prometheus` object.
@@ -210,6 +211,7 @@ metadata:
     app.kubernetes.io/version: 0.82.2
   name: prometheus-operator
   namespace: default
+
 ```
 
 Note that the `ServiceAccountName` also has to actually be used in `spec.template.spec.serviceAccount` of the `Deployment` of the Prometheus Operator.
@@ -233,6 +235,7 @@ subjects:
 - kind: ServiceAccount
   name: prometheus-operator
   namespace: default
+
 ```
 
 Because the `Pod` that the Prometheus Operator is running in uses the `ServiceAccount` named `prometheus-operator` and the `ClusterRoleBinding` associates it with the `ClusterRole` named `prometheus-operator`, it now has the required permissions to access all the resources as described above.
@@ -244,6 +247,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: prometheus
+
 ```
 
 And then because the `ClusterRole` named `prometheus`, as described above, is likely to be used multiple times, a `ClusterRoleBinding` instead of a `RoleBinding` is used.
@@ -261,6 +265,7 @@ subjects:
 - kind: ServiceAccount
   name: prometheus
   namespace: default
+
 ```
 
 > See [Using Authorization Plugins](https://kubernetes.io/docs/reference/access-authn-authz/authorization/) for further usage information on RBAC components.

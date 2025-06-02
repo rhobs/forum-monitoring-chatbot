@@ -11,7 +11,7 @@ To keep your cluster safer, it's strongly recommended to enable network policies
 # Example
 
 This example will close all inbound communication on the namespace monitoring, and allow only necessary traffic.
-**This example has only been tested with the calico provider.**
+__This example has only been tested with the calico provider.__
 
 First, follow the instructions to [add Calico to an existing Kubernetes cluster](http://docs.projectcalico.org/v1.5/getting-started/kubernetes/installation/).
 
@@ -26,12 +26,14 @@ Next, use the following configuration to deny all the ingress (inbound) traffic.
  spec:
    podSelector:
      matchLabels:
+
 ```
 
 Save the config file as default-deny-all.yaml and apply the configuration to the cluster using
 
 ```sh
 kubectl apply -f <path to config file>/default-deny-all.yaml
+
 ```
 
 Apply the following network policies to allow the necessary traffic to access ports in the pod:
@@ -44,6 +46,7 @@ networkpolicy "alertmanager-mesh" configured
 networkpolicy "grafana" configured
 networkpolicy "node-exporter" configured
 networkpolicy "prometheus" configured
+
 ```
 
 ## Explaining the network policies
@@ -67,8 +70,7 @@ spec:
   podSelector:
     matchLabels:
       alertmanager: main
-      app.kubernetes.io/name: alertmanager
----
+##       app.kubernetes.io/name: alertmanager
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -115,6 +117,7 @@ spec:
   podSelector:
     matchLabels:
       app: grafana
+
 ```
 
 #### Prometheus
@@ -135,6 +138,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: prometheus
       prometheus: k8s
+
 ```
 
 #### Node-exporter
@@ -165,6 +169,7 @@ spec:
   podSelector:
     matchLabels:
       app: node-exporter
+
 ```
 
 #### Kube-state-metrics
@@ -195,4 +200,5 @@ spec:
   podSelector:
     matchLabels:
       app: kube-state-metrics
+
 ```

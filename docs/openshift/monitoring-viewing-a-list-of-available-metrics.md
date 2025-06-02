@@ -10,22 +10,24 @@ As a cluster administrator or as a user with view permissions for all projects, 
 * You have obtained the OpenShift API route for Thanos Querier.
 * You are able to get a bearer token by using the `oc whoami -t` command.
 +
-[IMPORTANT]
-====
-You can only use bearer token authentication to access the Thanos Querier API route.
-====
+# [IMPORTANT]
+# You can only use bearer token authentication to access the Thanos Querier API route.
 
 .Procedure
 
 . If you have not obtained the OpenShift API route for Thanos Querier, run the following command:
 +
+
 ```terminal
 $ oc get routes -n openshift-monitoring thanos-querier -o jsonpath='{.status.ingress[0].host}'
+
 ```
 
 . Retrieve a list of metrics in JSON format from the Thanos Querier API route by running the following command. This command uses `oc` to authenticate with a bearer token.
 +
+
 ```terminal
 $ curl -k -H "Authorization: Bearer $(oc whoami -t)" https://<thanos_querier_route>/api/v1/metadata <1>
+
 ```
 <1> Replace `<thanos_querier_route>` with the OpenShift API route for Thanos Querier.

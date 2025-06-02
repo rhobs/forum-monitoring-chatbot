@@ -13,13 +13,16 @@ You can configure the core OpenShift monitoring components by creating and updat
 
 . Check whether the `cluster-monitoring-config` `ConfigMap` object exists:
 +
+
 ```terminal
 $ oc -n openshift-monitoring get configmap cluster-monitoring-config
+
 ```
 
 . If the `ConfigMap` object does not exist:
 .. Create the following YAML manifest. In this example the file is called `cluster-monitoring-config.yaml`:
 +
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -28,10 +31,13 @@ metadata:
   namespace: openshift-monitoring
 data:
   config.yaml: |
+
 ```
 +
 .. Apply the configuration to create the `ConfigMap` object:
 +
+
 ```terminal
 $ oc apply -f cluster-monitoring-config.yaml
+
 ```

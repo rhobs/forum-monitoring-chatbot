@@ -17,12 +17,15 @@ You can set an audit log level for the Prometheus Adapter in the default `opensh
 
 . Edit the `cluster-monitoring-config` `ConfigMap` object in the `openshift-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-monitoring edit configmap cluster-monitoring-config
+
 ```
 
 . Add `profile:` in the `k8sPrometheusAdapter/audit` section under `data/config.yaml`:
 +
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -34,6 +37,7 @@ data:
     k8sPrometheusAdapter:
       audit:
         profile: <audit_log_level> <1>
+
 ```
 <1> The audit log level to apply to the Prometheus Adapter.
 
@@ -52,30 +56,39 @@ data:
 
 . Confirm that the pods for the Prometheus Adapter are running. The following example lists the status of pods in the `openshift-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-monitoring get pods
+
 ```
 
 . Confirm that the audit log level and audit log file path are correctly configured:
 +
+
 ```terminal
 $ oc -n openshift-monitoring get deploy prometheus-adapter -o yaml
+
 ```
 +
 .Example output
+
 ```terminal
 ...
   - --audit-policy-file=/etc/audit/request-profile.yaml
   - --audit-log-path=/var/log/adapter/audit.log
+
 ```
 
 . Confirm that the correct log level has been applied in the `prometheus-adapter` deployment in the `openshift-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-monitoring exec deploy/prometheus-adapter -c prometheus-adapter -- cat /etc/audit/request-profile.yaml
+
 ```
 +
 .Example output
+
 ```terminal
 "apiVersion": "audit.k8s.io/v1"
 "kind": "Policy"
@@ -85,16 +98,16 @@ $ oc -n openshift-monitoring exec deploy/prometheus-adapter -c prometheus-adapte
 - "RequestReceived"
 "rules":
 - "level": "Request"
+
 ```
 +
-[NOTE]
-====
-If you enter an unrecognized `profile` value for the Prometheus Adapter in the `ConfigMap` object, no changes are made to the Prometheus Adapter, and an error is logged by the {cmo-full}.
-====
+# [NOTE]
+# If you enter an unrecognized `profile` value for the Prometheus Adapter in the `ConfigMap` object, no changes are made to the Prometheus Adapter, and an error is logged by the {cmo-full}.
 
 . Review the audit log for the Prometheus Adapter:
 +
+
 ```terminal
 $ oc -n openshift-monitoring exec -c <prometheus_adapter_pod_name> -- cat /var/log/adapter/audit.log
-```
 
+```

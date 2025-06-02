@@ -16,18 +16,23 @@ To validate that the monitoring stack is working correctly, access the example s
 
 . Create a route to expose the example `prometheus-coo-example-app` service. From your terminal, run the command:
 +
+
 ```terminal
 $ oc expose svc prometheus-coo-example-app -n ns1-coo
+
 ```
 . Access the route from your browser, or command line, to generate metrics.
 
 . Execute a query on the Prometheus pod to return the total HTTP requests metric:
 +
+
 ```terminal
 $ oc -n ns1-coo exec -c prometheus prometheus-example-coo-monitoring-stack-0 -- curl -s 'http://localhost:9090/api/v1/query?query=http_requests_total'
+
 ```
 +
 .Example output (formatted using `jq` for convenience)
+
 ```json
 {
   "status": "success",
@@ -71,4 +76,5 @@ $ oc -n ns1-coo exec -c prometheus prometheus-example-coo-monitoring-stack-0 -- 
     ]
   }
 }
+
 ```

@@ -1,12 +1,12 @@
 ## Your Proposal Title
 
-* **Owners:**
+* __Owners:__
   * `<@author: single champion for the moment of writing>`
-* **Status:**
+* __Status:__
   * `<Accepted/Rejected/Implemented>`
-* **Related Tickets:**
+* __Related Tickets:__
   * `<JIRA, GH Issues>`
-* **Other docs:**
+* __Other docs:__
   * `<Links…>`
 
 > TL;DR: Give a summary of what this document is proposing and what components it is touching.
@@ -51,7 +51,7 @@ If this is not clear already, provide the target audience for this change.
 
 Explain the full overview of the proposed solution. Some guidelines:
 
-* Make it concise and **simple**; put diagrams; be concrete, avoid using “really”, “amazing” and “great” (:
+* Make it concise and __simple__; put diagrams; be concrete, avoid using “really”, “amazing” and “great” (:
 * How will you test and verify?
 * How will you migrate users, without downtime. How do we solve incompatibilities?
 * What open questions are left? (“Known unknowns”)

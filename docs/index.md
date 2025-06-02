@@ -64,8 +64,7 @@ Thank you for visiting the official documentation. Here you'll find all the info
 - [Additional Configuration](prometheus-operator/additional-scrape-config.md)
 - [Platform Specific Guides](prometheus-operator/platform/)
 - [Developer Documentation](prometheus-operator/developer/)
-
----
+## 
 
 ## Introduction
 
@@ -76,7 +75,6 @@ Key features:
 - Service discovery and monitoring
 - Custom resource definitions for monitoring configuration
 - Integration with various platforms and environments
-
----
+## 
 
 If you have any questions or suggestions, feel free to contact us.

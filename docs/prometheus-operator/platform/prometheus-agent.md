@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: Guide for running Prometheus in Agent mode
----
+## description: Guide for running Prometheus in Agent mode
 
 {{< alert icon="👉" text="Prometheus Operator >= v0.64.0 is required."/>}}
 
@@ -127,6 +126,7 @@ rules:
   - create
   - update
   - delete
+
 ```
 
 Similarly to Prometheus, Prometheus Agent will also require permission to scrape targets. Because of this, we will create a new service account for the Agent with the necessary permissions to scrape targets.
@@ -138,6 +138,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: prometheus-agent
+
 ```
 
 ```yaml mdox-exec="cat example/rbac/prometheus-agent/prometheus-cluster-role.yaml"
@@ -163,6 +164,7 @@ rules:
   verbs: ["get", "list", "watch"]
 - nonResourceURLs: ["/metrics"]
   verbs: ["get"]
+
 ```
 
 ```yaml mdox-exec="cat example/rbac/prometheus-agent/prometheus-cluster-role-binding.yaml"
@@ -178,6 +180,7 @@ subjects:
 - kind: ServiceAccount
   name: prometheus-agent
   namespace: default
+
 ```
 
 Lastly, we can deploy the Agent. The `spec` field is very similar to the Prometheus CRD but the features that aren't applicable to the agent mode (like alerting, retention, Thanos, ...) are not available.
@@ -193,6 +196,7 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       team: frontend
+
 ```
 
 Continue with the [Getting Started page]({{<ref "docs/developer/getting-started.md">}}) to learn how to monitor applications running on Kubernetes.
