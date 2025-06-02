@@ -33,5 +33,4 @@ sum by (vm_instance) (
       cluster:master_nodes
     )
   )
-)
-----
+## )

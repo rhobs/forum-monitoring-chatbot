@@ -8,8 +8,7 @@ menu:
 lead: Command line arguments for the operator binary
 images: []
 draft: false
-description: Command line arguments for the operator binary
----
+## description: Command line arguments for the operator binary
 
 > Note this document is automatically generated from the `cmd/operator/main.go` file and shouldn't be edited directly.
 
@@ -124,4 +123,5 @@ Usage of ./operator:
     	Minimum TLS version supported. Value must match version names from https://golang.org/pkg/crypto/tls/#pkg-constants. (default "VersionTLS13")
   -web.tls-reload-interval duration
     	The interval at which to watch for TLS certificate changes, by default set to 1 minute. (default 1m0s). (default 1m0s)
+
 ```

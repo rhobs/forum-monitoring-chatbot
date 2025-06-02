@@ -2,33 +2,24 @@
 [id="querying-metrics-for-all-projects-with-mon-dashboard_{context}"]
 # Querying metrics for all projects with the OpenShift web console
 
-
-
 You can use the OpenShift metrics query browser to run Prometheus Query Language (PromQL) queries to examine metrics visualized on a plot. This functionality provides information about the state of a cluster and any user-defined workloads that you are monitoring.
 
 As a
 
 cluster administrator
 
-
 `dedicated-admin`
 
 or as a user with view permissions for all projects, you can access metrics for all default OpenShift and user-defined projects in the Metrics UI.
 
-
-[NOTE]
-====
-Only dedicated administrators have access to the third-party UIs provided with OpenShift monitoring.
-====
-
+# [NOTE]
+# Only dedicated administrators have access to the third-party UIs provided with OpenShift monitoring.
 
 The Metrics UI includes predefined queries, for example, CPU, memory, bandwidth, or network packet for all projects. You can also run custom Prometheus Query Language (PromQL) queries.
 
 .Prerequisites
 
-
 * You have access to the cluster as a user with the `cluster-admin` cluster role or with view permissions for all projects.
-
 
 * You have access to the cluster as a user with the `dedicated-admin` role or with view permissions for all projects.
 
@@ -61,12 +52,10 @@ Use the keyboard arrows to select one of these suggested items and then press En
 
 . To run queries that you created, click *Run queries*. The metrics from the queries are visualized on the plot. If a query is invalid, the UI shows an error message.
 +
-[NOTE]
-====
+# [NOTE]
 * When drawing time series graphs, queries that operate on large amounts of data might time out or overload the browser. To avoid this, click *Hide graph* and calibrate your query by using only the metrics table. Then, after finding a feasible query, enable the plot to draw the graphs.
 
-* By default, the query table shows an expanded view that lists every metric and its current value. Click the *˅* down arrowhead to minimize the expanded view for a query.
-====
+# * By default, the query table shows an expanded view that lists every metric and its current value. Click the *˅* down arrowhead to minimize the expanded view for a query.
 
 . Optional: Save the page URL to use this set of queries again in the future.
 

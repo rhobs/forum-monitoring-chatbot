@@ -105,6 +105,7 @@ spec:
     # otherwise (e.g. size-based retention) the statefulset lives forever.
     retain:
       retentionPeriod: 3d
+
 ```
 
 Inspired by the [StatefulSet API](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention), when setting `.shardRetentionPolicy.whenScaled` is set to `Delete` the operator would simply delete the underlying StatefulSet on the spot, not caring about the data stored in that particular shard. Although not the safest approach, it is exactly the current behavior, and changing it might surprise a lot of users.
@@ -115,6 +116,7 @@ If a retention time is defined, the deletion logic is controlled by an annotatio
 
 ```yaml
 operator.prometheus.io/deletion-timestamp: X
+
 ```
 
 On scale downs, the configuration of all shards will be re-arranged to make sure that the "scaled-down" Prometheus pods don't scrape targets anymore but they will still be available for queries.
@@ -141,10 +143,10 @@ Since there's no use case for retaining Prometheus Agents, its CRD will not be e
 
 During scale-down, the Prometheus-Operator could read TSDB Blocks from the Prometheus instance being deleted and backfill it into another instance.
 
-***Advantages:***
+*__Advantages:__*
 * Prometheus can be shut down immediately without data loss.
 
-***Disadvantages:***
+*__Disadvantages:__*
 * Loading TSDB Blocks into memory is expensive, requiring Prometheus-Operator to run with big Memory/CPU requests.
 * Complex and hard to coordinate workflow. (Require restarts to reload TSDB blocks, hard to identify possible corruptions)
 
@@ -154,10 +156,10 @@ During scale-down, Prometheus-Operator could send an HTTP request to [Prometheus
 
 There is a related issue open already: https://github.com/thanos-io/thanos/issues/6263
 
-***Advantages:***
+*__Advantages:__*
 * Prometheus can be shut down immediately without data loss.
 
-***Disadvantages:***
+*__Disadvantages:__*
 * Prometheus running without Thanos sidecars won't benefit from this strategy.
 
 # Action Plan

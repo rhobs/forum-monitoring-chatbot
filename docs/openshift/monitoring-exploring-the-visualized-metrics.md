@@ -10,10 +10,8 @@ In the *Administrator* perspective:
 
 * Initially, all metrics from all enabled queries are shown on the plot. You can select which metrics are shown.
 +
-[NOTE]
-====
-By default, the query table shows an expanded view that lists every metric and its current value. You can select *˅* to minimize the expanded view for a query.
-====
+# [NOTE]
+# By default, the query table shows an expanded view that lists every metric and its current value. You can select *˅* to minimize the expanded view for a query.
 
 ** To hide all metrics from a query, click {kebab} for the query and click *Hide all series*.
 
@@ -21,9 +19,9 @@ By default, the query table shows an expanded view that lists every metric and i
 
 * To zoom into the plot and change the time range, do one of the following:
 
-** Visually select the time range by clicking and dragging on the plot horizontally.
+__ Visually select the time range by clicking and dragging on the plot horizontally.
 
-** Use the menu in the left upper corner to select the time range.
+__ Use the menu in the left upper corner to select the time range.
 
 * To reset the time range, select *Reset Zoom*.
 
@@ -35,9 +33,9 @@ In the *Developer* perspective:
 
 * To zoom into the plot and change the time range, do one of the following:
 
-** Visually select the time range by clicking and dragging on the plot horizontally.
+__ Visually select the time range by clicking and dragging on the plot horizontally.
 
-** Use the menu in the left upper corner to select the time range.
+__ Use the menu in the left upper corner to select the time range.
 
 * To reset the time range, select *Reset Zoom*.
 

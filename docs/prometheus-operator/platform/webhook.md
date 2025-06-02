@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: Guide to deploy and run the admission webhook service
----
+## description: Guide to deploy and run the admission webhook service
 
 This guide describes how to deploy and use the Prometheus operator's admission webhook service.
 
@@ -46,6 +45,7 @@ kind: Secret
 metadata:
   name: admission-webhook-certs
   namespace: default
+
 ```
 
 The recommended approach is to use [cert-manager](https://cert-manager.io/)
@@ -73,6 +73,7 @@ spec:
   issuerRef:
     name: selfsigned-cluster-issuer
     kind: ClusterIssuer
+
 ```
 
 ## Deploying the admission webhook
@@ -89,6 +90,7 @@ metadata:
     app.kubernetes.io/version: 0.82.2
   name: prometheus-operator-admission-webhook
   namespace: default
+
 ```
 
 ```yaml mdox-exec="cat example/admission-webhook/deployment.yaml"
@@ -169,6 +171,7 @@ spec:
           - key: tls.key
             path: tls.key
           secretName: admission-webhook-certs
+
 ```
 
 You can now expose the webhook as a Kubernetes service by applying the following manifest.
@@ -189,6 +192,7 @@ spec:
     targetPort: https
   selector:
     app.kubernetes.io/name: prometheus-operator-admission-webhook
+
 ```
 
 ## Managing webhook configurations
@@ -240,6 +244,7 @@ webhooks:
           - prometheusrules
     admissionReviewVersions: ["v1", "v1beta1"]
     sideEffects: None
+
 ```
 
 #### Mutating PrometheusRule resources
@@ -280,6 +285,7 @@ webhooks:
           - prometheusrules
     admissionReviewVersions: ["v1", "v1beta1"]
     sideEffects: None
+
 ```
 
 ### AlertmanagerConfig
@@ -320,6 +326,7 @@ webhooks:
           - alertmanagerconfigs
     admissionReviewVersions: ["v1", "v1beta1"]
     sideEffects: None
+
 ```
 
 ## Converting AlertmanagerConfig resources
@@ -357,12 +364,14 @@ cat <<EOF | kubectl patch crds/alertmanagerconfigs.monitoring.coreos.com --patch
    }
 }
 EOF
+
 ```
 
 Annotate the AlertmanagerConfig CRD to let cert-manager inject the service CA bundle.
 
 ```bash
 kubectl annotate crds alertmanagerconfigs.monitoring.coreos.com cert-manager.io/inject-ca-from=default/prometheus-operator-admission-webhook
+
 ```
 
 > Note: If you're not using cert-manager, check the [CA Bundle]({{< ref "#ca-bundle" >}}) section.
@@ -376,6 +385,6 @@ base64-encoded CA certificate that signed the webhook's TLS certificate.
 
 Certificate managers like [cert-manager](https://cert-manager.io/) supports
 automatic CA injection into webhook configurations and custom resource
-definitions. If you are **not using** a certificate manager, you need to
+definitions. If you are __not using__ a certificate manager, you need to
 manually specify the `caBundle` field in `ValidatingWebhookConfiguration`,
 `MutatingWebhookConfiguration` and `CustomResourceDefinition`.

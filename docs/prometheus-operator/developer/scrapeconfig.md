@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: Guide to use ScrapeConfig to scrape targets external to the Kubernetes cluster
----
+## description: Guide to use ScrapeConfig to scrape targets external to the Kubernetes cluster
 
 Starting with prometheus-operator v0.65.x, one can use the `ScrapeConfig` CRD to scrape targets external to the
 Kubernetes cluster or create scrape configurations that are not possible with the higher level
@@ -29,6 +28,7 @@ spec:
   scrapeConfigSelector:
     matchLabels:
       prometheus: system-monitoring-prometheus
+
 ```
 
 With this example, all `ScrapeConfig` having the `prometheus` label set to `system-monitoring-prometheus` will be used
@@ -66,6 +66,7 @@ spec:
         job: prometheus
       targets:
         - prometheus.demo.do.prometheus.io:9090
+
 ```
 
 ## `file_sd`
@@ -90,6 +91,7 @@ data:
         job: prometheus
       targets:
       - prometheus.demo.do.prometheus.io:9090
+
 ```
 
 This `ConfigMap` will then need to be mounted in the `Prometheus` spec:
@@ -108,6 +110,7 @@ spec:
       prometheus: system-monitoring-prometheus
   configMaps:
     - scrape-file-sd-targets
+
 ```
 
 You can then use ScrapeConfig to reference that file and scrape the associated targets:
@@ -125,6 +128,7 @@ spec:
   fileSDConfigs:
     - files:
         - /etc/prometheus/configmaps/scrape-file-sd-targets/targets.yaml
+
 ```
 
 ## `http_sd`
@@ -144,4 +148,5 @@ spec:
   httpSDConfigs:
     - url: http://my-external-api/discovery
       refreshInterval: 15s
+
 ```

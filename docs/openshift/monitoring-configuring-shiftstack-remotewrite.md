@@ -14,44 +14,42 @@ Use remote write with both {rhoso-first} and OpenShift to push their metrics to 
 - The monitoring stack for your {rhoso} cluster is configured to collect the metrics that you are interested in.
 - Telemetry is enabled in the {rhoso} environment.
 +
-[NOTE]
-====
+# [NOTE]
 To verify that the telemetry service is operating normally, entering the following command:
+
 ```shell
 $ oc -n openstack get monitoringstacks metric-storage -o yaml
+
 ```
-The `monitoringstacks` CRD indicates whether telemetry is enabled correctly.
-====
+# The `monitoringstacks` CRD indicates whether telemetry is enabled correctly.
 
 .Procedure
-
-
-
-
-
-
-
 
 . Configure your {rhoso} management cluster to send metrics to Prometheus:
 
 .. Create a secret that is named `mtls-bundle` in the `openstack` namespace that contains HTTPS client certificates for authentication to Prometheus by entering the following command:
 +
+
 ```shell
 $ oc --namespace openstack \
     create secret generic mtls-bundle \
         --from-file=./ca.crt \
         --from-file=osp-client.crt \
         --from-file=osp-client.key
+
 ```
 
 .. Open the `controlplane` configuration for editing by running the following command:
 +
+
 ```shell
 $ oc -n openstack edit openstackcontrolplane/controlplane
+
 ```
 
 .. With the configuration open, replace the `.spec.telemetry.template.metricStorage` section so that {rhoso} sends metrics to Prometheus. As an example:
 +
+
 ```yaml
       metricStorage:
         customMonitoringStack:
@@ -90,6 +88,7 @@ $ oc -n openstack edit openstackcontrolplane/controlplane
         dataplaneNetwork: ctlplane
         enabled: true
         prometheusTls: {}
+
 ```
 <1> Replace this URL with the URL of your Prometheus instance.
 <2> Set a retention period. Optionally, you can reduce retention for local metrics because of external collection.
@@ -98,6 +97,7 @@ $ oc -n openstack edit openstackcontrolplane/controlplane
 
 .. Create a cluster monitoring config map as a YAML file. The map must include a remote write configuration and cluster identifiers. As an example:
 +
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -127,6 +127,7 @@ data:
           keySecret:
             name: mtls-bundle
             key: ocp-client.key
+
 ```
 <1> Set a retention period. Optionally, you can reduce retention for local metrics because of external collection.
 
@@ -134,18 +135,22 @@ data:
 
 .. Create a secret that is named `mtls-bundle` in the `openshift-monitoring` namespace that contains HTTPS client certificates for authentication to Prometheus by entering the following command:
 +
+
 ```terminal
 $ oc --namespace openshift-monitoring \
     create secret generic mtls-bundle \
         --from-file=./ca.crt \
         --from-file=ocp-client.crt \
         --from-file=ocp-client.key
+
 ```
 
 .. Apply the cluster monitoring configuration by running the following command:
 +
+
 ```terminal
 $ oc apply -f cluster-monitoring-config.yaml
+
 ```
 
 After the changes propagate, you can see aggregated metrics in your external Prometheus instance.

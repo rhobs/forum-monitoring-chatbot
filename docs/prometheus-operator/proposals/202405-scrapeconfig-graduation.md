@@ -83,7 +83,7 @@ The following is the list of Service Discoveries which we want to support before
 
 If we were to categorize the Service Discoveries based on the amount of effort we are willing to put in maintaining them:
 
-**Tier-1:**
+__Tier-1:__
 Project maintainers fully support the service discovery in this group. It includes the Kubernetes SD since the Operator requires a Kubernetes control plane to run. It also includes core service discoveries based on well-established protocols.
 - Kubernetes Service Discovery
 - File Service Discovery
@@ -91,7 +91,7 @@ Project maintainers fully support the service discovery in this group. It includ
 - DNS Service Discovery
 - HTTP Service Discovery
 
-**Tier-2:**
+__Tier-2:__
 This group includes service discoveries which are related to Kubernetes, cloud-native environments and widely used solutions. The project maintainers don't actively support them but they are happy to review issues and pull requests.
 - DigitalOcean Service Discovery
 - Consul Service Discovery
@@ -111,15 +111,15 @@ maintainers.
 
 At the time of writing this document, the following Service Discoveries are not supported but may be added in the future on user requests and contributions:
 
-- **`uyuni_sd_config`**
-- **`vultr_sd_config`**
+- __`uyuni_sd_config`__
+- __`vultr_sd_config`__
 
 We don't plan to support the following Service Discoveries, due to them being deprecated or inactive:
 
-- **`marathon_sd_config`**
-- **`nerve_sd_config`**
-- **`serverset_sd_config`**
-- **`triton_sd_config`**
+- __`marathon_sd_config`__
+- __`nerve_sd_config`__
+- __`serverset_sd_config`__
+- __`triton_sd_config`__
 
 ### Fill Existing Gaps From The Prometheus Configuration
 
@@ -162,26 +162,28 @@ Note: In this strategy, both the `v1alpha1` and `v1beta1` APIs are expected to b
 From the [Kuberenetes CRD docs](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#specify-multiple-versions),
 the `CustomResourceDefinition` would contain the following lines:
 
-```
-  conversion:
+
+
+``` conversion:
     # None conversion assumes the same schema for all versions and only sets the apiVersion
     # field of custom resources to the proper value
     strategy: None
+
 ```
 
 ### Testing and Verification
 
-- **Covering All Test Cases For Kubernetes Service Discovery**: Since Kubernetes is our main player, make sure all testcases for unit tests and e2e tests have been covered for the Kubernetes Service Discovery.
+- __Covering All Test Cases For Kubernetes Service Discovery__: Since Kubernetes is our main player, make sure all testcases for unit tests and e2e tests have been covered for the Kubernetes Service Discovery.
 
-- **Implement Comprehensive Unit Tests**: Ensure that unit tests are added for all new and existing Service Discovery configurations to ensure that the expected configuration is generated and validations are in place.
+- __Implement Comprehensive Unit Tests__: Ensure that unit tests are added for all new and existing Service Discovery configurations to ensure that the expected configuration is generated and validations are in place.
 
 ## Alternatives
 
-- **Introduce v1alpha2 Before Beta**
+- __Introduce v1alpha2 Before Beta__
   - Strategy: Create a `v1alpha2` version incorporating all necessary breaking changes and refinements. Transition from `v1alpha2` to `v1beta1` when ready.
   - Con: additional complexity for users without real benefit.
 
-- **Implement v1alpha1 to v1beta1 Conversion Webhook**
+- __Implement v1alpha1 to v1beta1 Conversion Webhook__
   - Strategy: Graduate to `v1beta1` from `v1alpha1` with all the necessary changes/improvements and handle any breaking changes in the API between the two versions
     with a conversion webhook. This ensures that users can automatically transition their configurations without manual intervention.
   - Con: Greatly increases complexity for the maintainers as well as the users.

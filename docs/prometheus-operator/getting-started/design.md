@@ -7,8 +7,7 @@ menu:
         parent: prologue
 images: []
 draft: false
-description: This document describes the design and interaction between the custom resource definitions that the Prometheus Operator manages.
----
+## description: This document describes the design and interaction between the custom resource definitions that the Prometheus Operator manages.
 
 This document describes the design and interaction between the [custom resource definitions](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/) that the Prometheus Operator manages.
 

@@ -1,18 +1,10 @@
 :_mod-docs-content-type: PROCEDURE
 
-
-
-
 [id="getting-information-about-alerts-silences-and-alerting-rules-adm_{context}"]
 # Getting information about alerts, silences, and alerting rules from the Administrator perspective
 
-
-
 [id="getting-information-about-alerts-silences-and-alerting-rules-dev_{context}"]
 # Getting information about alerts, silences, and alerting rules from the Developer perspective
-
-
-
 
 The Alerting UI provides detailed information about alerts and their governing alerting rules and silences.
 
@@ -21,7 +13,6 @@ The Alerting UI provides detailed information about alerts and their governing a
 * You have access to the cluster as a user with view permissions for the project that you are viewing alerts for.
 
 .Procedure
-
 
 To obtain information about alerts:
 
@@ -76,8 +67,6 @@ To obtain information about alerting rules:
 * A graph for each alert governed by the alerting rule, showing the value with which the alert is firing.
 * A table of all alerts governed by the alerting rule.
 
-
-
 To obtain information about alerts, silences, and alerting rules:
 
 . From the *Developer* perspective of the OpenShift web console, go to the *Observe* -> *<project_name>* -> *Alerts* page.
@@ -88,15 +77,13 @@ To obtain information about alerts, silences, and alerting rules:
 
 * *Silence details* can be viewed by clicking a silence in the *Silenced by* section of the *Alert details* page. The *Silence details* page includes the following information:
 
-** Alert specification
-** Start time
-** End time
-** Silence state
+__ Alert specification
+__ Start time
+__ End time
+__ Silence state
 ** Number and list of firing alerts
 
 * *Alerting rule details* can be viewed by clicking the {kebab} menu next to an alert in the *Alerts* page and then clicking *View Alerting Rule*.
 
-[NOTE]
-====
-Only alerts, silences, and alerting rules relating to the selected project are displayed in the *Developer* perspective.
-====
+# [NOTE]
+# Only alerts, silences, and alerting rules relating to the selected project are displayed in the *Developer* perspective.

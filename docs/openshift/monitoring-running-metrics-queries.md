@@ -14,10 +14,8 @@ You begin working with metrics by entering one or several Prometheus Query Langu
 . For keeping but not running a query, click *Disable query*.
 . After you finish creating queries, click *Run Queries*. The metrics from the queries are visualized on the plot. If a query is invalid, the UI shows an error message.
 +
-[NOTE]
-====
-Queries that operate on large amounts of data might timeout or overload the browser when drawing timeseries graphs. To avoid this, hide the graph and calibrate your query using only the metrics table. Then, after finding a feasible query, enable the plot to draw the graphs.
-====
+# [NOTE]
+# Queries that operate on large amounts of data might timeout or overload the browser when drawing timeseries graphs. To avoid this, hide the graph and calibrate your query using only the metrics table. Then, after finding a feasible query, enable the plot to draw the graphs.
 +
 . Optional: The page URL now contains the queries you ran. To use this set of queries again in the future, save this URL.
 

@@ -9,15 +9,13 @@ This document describes the following resources deployed and managed by the Clus
 
 Use this information when you want to configure API endpoint connections to retrieve, send, or query metrics data.
 
-[IMPORTANT]
-====
+# [IMPORTANT]
 In certain situations, accessing endpoints can degrade the performance and scalability of your cluster, especially if you use endpoints to retrieve, send, or query large amounts of metrics data.
 
 To avoid these issues, follow these recommendations:
 
 * Avoid querying endpoints frequently. Limit queries to a maximum of one every 30 seconds.
-* Do not try to retrieve all metrics data via the `/federate` endpoint. Query it only when you want to retrieve a limited, aggregated data set. For example, retrieving fewer than 1,000 samples for each request helps minimize the risk of performance degradation.
-====
+# * Do not try to retrieve all metrics data via the `/federate` endpoint. Query it only when you want to retrieve a limited, aggregated data set. For example, retrieving fewer than 1,000 samples for each request helps minimize the risk of performance degradation.
 [id="cmo-routes-resources_{context}"]
 ## CMO routes resources
 
@@ -144,4 +142,3 @@ This also exposes the gRPC endpoints on port 10901. This port is for internal us
 ### openshift-monitoring/cluster-monitoring-operator
 
 Expose the `/metrics` and `/validate-webhook` endpoints on port 8443. This port is for internal use, and no other usage is guaranteed.
-

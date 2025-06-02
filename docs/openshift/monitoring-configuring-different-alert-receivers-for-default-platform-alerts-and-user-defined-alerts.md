@@ -12,7 +12,5 @@ You can achieve this by using the `openshift_io_alert_source="platform"` label t
 * Use the `openshift_io_alert_source="platform"` matcher to match default platform alerts.
 * Use the `openshift_io_alert_source!="platform"` or `'openshift_io_alert_source=""'` matcher to match user-defined alerts.
 
-[NOTE]
-====
-This configuration does not apply if you have enabled a separate instance of Alertmanager dedicated to user-defined alerts.
-====
+# [NOTE]
+# This configuration does not apply if you have enabled a separate instance of Alertmanager dedicated to user-defined alerts.

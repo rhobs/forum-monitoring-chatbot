@@ -2,22 +2,17 @@
 [id="example-remote-write-queue-configuration_{context}"]
 # Example remote write queue configuration
 
-
-
 :configmap-name: cluster-monitoring-config
 :namespace-name: openshift-monitoring
 :component: prometheusK8s
-
 
 :configmap-name: user-workload-monitoring-config
 :namespace-name: openshift-user-workload-monitoring
 :component: prometheus
 
-
 You can use the `queueConfig` object for remote write to tune the remote write queue parameters. The following example shows the queue parameters with their default values for 
 
 default platform monitoring
-
 
 monitoring for user-defined projects
 
@@ -25,6 +20,7 @@ in the `{namespace-name}` namespace.
 
 .Example configuration of remote write parameters with default values
 [source,yaml,subs="attributes+"]
+
 ```
 apiVersion: v1
 kind: ConfigMap
@@ -47,6 +43,7 @@ data:
           maxBackoff: 5s #<7>
           retryOnRateLimit: false #<8>
           sampleAgeLimit: 0s #<9>
+
 ```
 <1> The number of samples to buffer per shard before they are dropped from the queue.
 <2> The minimum number of shards.
@@ -58,8 +55,6 @@ data:
 <8> Set this parameter to `true` to retry a request after receiving a 429 status code from the remote write storage.
 <9> The samples that are older than the `sampleAgeLimit` limit are dropped from the queue. If the value is undefined or set to `0s`, the parameter is ignored.
 
-
 :!configmap-name:
 :!namespace-name:
 :!component:
-

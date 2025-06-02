@@ -14,12 +14,16 @@ To list alerting rules for a user-defined project, you must have been assigned t
 
 . To list alerting rules in `<project>`:
 +
+
 ```terminal
 $ oc -n <project> get prometheusrule
+
 ```
 
 . To list the configuration of an alerting rule, run the following:
 +
+
 ```terminal
 $ oc -n <project> get prometheusrule <rule> -o yaml
+
 ```

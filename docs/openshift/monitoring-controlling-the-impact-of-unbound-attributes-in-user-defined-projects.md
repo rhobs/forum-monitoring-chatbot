@@ -6,9 +6,7 @@ Developers can create labels to define attributes for metrics in the form of key
 
 Every assigned key-value pair has a unique time series. The use of many unbound attributes in labels can result in an exponential increase in the number of time series created. This can impact Prometheus performance and can consume a lot of disk space.
 
-
 Cluster administrators
-
 
 A `dedicated-admin`
 
@@ -19,7 +17,5 @@ can use the following measures to control the impact of unbound metrics attribut
 * Configure the intervals between consecutive scrapes and between Prometheus rule evaluations
 * Create alerts that fire when a scrape sample threshold is reached or when the target cannot be scraped
 
-[NOTE]
-====
-Limiting scrape samples can help prevent the issues caused by adding many unbound attributes to labels. Developers can also prevent the underlying cause by limiting the number of unbound attributes that they define for metrics. Using attributes that are bound to a limited set of possible values reduces the number of potential key-value pair combinations.
-====
+# [NOTE]
+# Limiting scrape samples can help prevent the issues caused by adding many unbound attributes to labels. Developers can also prevent the underlying cause by limiting the number of unbound attributes that they define for metrics. Using attributes that are bound to a limited set of possible values reduces the number of potential key-value pair combinations.

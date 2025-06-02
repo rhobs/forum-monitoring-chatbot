@@ -8,8 +8,7 @@ menu:
 images: []
 draft: false
 description: Installation guide listing all the installation methods of Prometheus Operator.
-date: "2020-11-16T13:59:39+01:00"
----
+## date: "2020-11-16T13:59:39+01:00"
 
 There are different approaches to install Prometheus Operator in your Kubernetes cluster:
 
@@ -19,9 +18,9 @@ There are different approaches to install Prometheus Operator in your Kubernetes
 
 ### Pre-requisites
 
-For all the approaches listed on this page, you require access to a **Kubernetes cluster!** For this, you can check the official docs of Kubernetes available [here](https://kubernetes.io/docs/tasks/tools/).
+For all the approaches listed on this page, you require access to a __Kubernetes cluster!__ For this, you can check the official docs of Kubernetes available [here](https://kubernetes.io/docs/tasks/tools/).
 
-Version `>=0.39.0` of the Prometheus Operator requires a Kubernetes cluster of version `>=1.16.0`. If you are just starting out with the Prometheus Operator, it is **highly recommended** to use the latest version. If you have an older version of Kubernetes and the Prometheus Operator running, we recommend upgrading Kubernetes first and then the Prometheus Operator.
+Version `>=0.39.0` of the Prometheus Operator requires a Kubernetes cluster of version `>=1.16.0`. If you are just starting out with the Prometheus Operator, it is __highly recommended__ to use the latest version. If you have an older version of Kubernetes and the Prometheus Operator running, we recommend upgrading Kubernetes first and then the Prometheus Operator.
 
 > Check the appropriate versions of each of the components in the [Compatibility]({{<ref "compatibility">}}) page.
 
@@ -34,6 +33,7 @@ Run the following commands to install the CRDs and deploy the operator in the `d
 ```bash
 LATEST=$(curl -s https://api.github.com/repos/prometheus-operator/prometheus-operator/releases/latest | jq -cr .tag_name)
 curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl create -f -
+
 ```
 
 The [Kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/) tool is required to install the operator into a namespace different than the `default` namespace:
@@ -45,12 +45,14 @@ LATEST=$(curl -s https://api.github.com/repos/prometheus-operator/prometheus-ope
 curl -s "https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/refs/tags/$LATEST/kustomization.yaml" > "$TMPDIR/kustomization.yaml"
 curl -s "https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/refs/tags/$LATEST/bundle.yaml" > "$TMPDIR/bundle.yaml"
 (cd $TMPDIR && kustomize edit set namespace $NAMESPACE) && kubectl create -k "$TMPDIR"
+
 ```
 
 It can take a few minutes for the operator to be up and running. You can check for completion with the following command:
 
 ```bash
 kubectl wait --for=condition=Ready pods -l  app.kubernetes.io/name=prometheus-operator
+
 ```
 
 ### Install using Kube-Prometheus
@@ -63,6 +65,7 @@ You can either clone the kube-prometheus from GitHub:
 
 ```shell
 git clone https://github.com/prometheus-operator/kube-prometheus.git
+
 ```
 
 or download the current main branch as zip file and extract its contents:
@@ -79,12 +82,15 @@ kubectl create -f manifests/setup
 until kubectl get servicemonitors --all-namespaces ; do date; sleep 1; echo ""; done
 
 kubectl create -f manifests/
+
 ```
 
 We create the namespace and CustomResourceDefinitions first to avoid race conditions when deploying the monitoring components. Alternatively, the resources in both folders can be applied with a single command:
 
-```
-kubectl create -f manifests/setup -f manifests
+
+
+```ubectl create -f manifests/setup -f manifests
+
 ```
 
 But it may be necessary to run the command multiple times for all components to be created successfully.
@@ -99,6 +105,7 @@ If you're done experimenting with kube-prometheus and the Prometheus Operator yo
 
 ```shell
 kubectl delete --ignore-not-found=true -f manifests/ -f manifests/setup
+
 ```
 
 ### Install Using Helm Chart

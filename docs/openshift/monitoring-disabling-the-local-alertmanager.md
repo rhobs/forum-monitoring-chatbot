@@ -16,12 +16,15 @@ If you do not need the local Alertmanager, you can disable it by configuring the
 
 . Edit the `cluster-monitoring-config` config map in the `openshift-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-monitoring edit configmap cluster-monitoring-config
+
 ```
 
 . Add `enabled: false` for the `alertmanagerMain` component under `data/config.yaml`:
 +
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -32,7 +35,7 @@ data:
   config.yaml: |
     alertmanagerMain:
       enabled: false
+
 ```
 
 . Save the file to apply the changes. The Alertmanager instance is disabled automatically when you apply the change.
-

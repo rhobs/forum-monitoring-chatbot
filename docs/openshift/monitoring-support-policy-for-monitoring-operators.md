@@ -12,9 +12,8 @@ The `spec.overrides` parameter can be added to the configuration for the CVO to 
 
 ```terminal
 Disabling ownership via cluster version overrides prevents upgrades. Please remove overrides before continuing.
+
 ```
 
-[WARNING]
-====
-Setting a CVO override puts the entire cluster in an unsupported state and prevents the monitoring stack from being reconciled to its intended state. This impacts the reliability features built into Operators and prevents updates from being received. Reported issues must be reproduced after removing any overrides for support to proceed.
-====
+# [WARNING]
+# Setting a CVO override puts the entire cluster in an unsupported state and prevents the monitoring stack from being reconciled to its intended state. This impacts the reliability features built into Operators and prevents updates from being received. Reported issues must be reproduced after removing any overrides for support to proceed.

@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: Guide on troubleshooting the Prometheus Operator.
----
+## description: Guide on troubleshooting the Prometheus Operator.
 
 ### `CustomResourceDefinition "..." is invalid: metadata.annotations: Too long` issue
 
@@ -18,6 +17,7 @@ When applying updated CRDs on a cluster, you may face the following error messag
 ```bash
 $ kubectl apply -f $MANIFESTS
 The CustomResourceDefinition "prometheuses.monitoring.coreos.com" is invalid: metadata.annotations: Too long: must have at most 262144 bytes
+
 ```
 
 The reason is that apply runs in the client by default and saves information into the object annotations but there's a hard limit on the size of annotations.
@@ -26,6 +26,7 @@ The workaround is to use server-side apply which requires Kubernetes v1.22 at le
 
 ```bash
 kubectl apply --server-side --force-conflicts -f $MANIFESTS
+
 ```
 
 If using ArgoCD, please refer to their [documentation](https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#server-side-apply).
@@ -34,12 +35,14 @@ If using ArgoCD, please refer to their [documentation](https://argo-cd.readthedo
 
 When you try to create `ClusterRole` (`kube-state-metrics`, `prometheus` `prometheus-operator`, etc.) on GKE Kubernetes cluster running 1.6 version, you will probably run into permission errors:
 
-```
-<....>
+
+
+```....>
 Error from server (Forbidden): error when creating
 "manifests/prometheus-operator/prometheus-operator-cluster-role.yaml":
 clusterroles.rbac.authorization.k8s.io "prometheus-operator" is forbidden: attempt to grant extra privileges:
 <....>
+
 ```
 
 This is due to the way Container Engine checks permissions. From [Google Kubernetes Engine docs](https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control):
@@ -58,6 +61,7 @@ Account: [myname@example.org]
 # grant cluster-admin to your current identity
 $ kubectl create clusterrolebinding myname-cluster-admin-binding --clusterrole=cluster-admin --user=myname@example.org
 Clusterrolebinding "myname-cluster-admin-binding" created
+
 ```
 
 ### Troubleshooting ServiceMonitor changes
@@ -80,12 +84,14 @@ Note: The `ServiceMonitor` references a `Service` (not a `Deployment`, or a `Pod
 
 ```sh
 kubectl -n monitoring get secret prometheus-k8s -ojson | jq -r '.data["prometheus.yaml.gz"]' | base64 -d | gunzip | grep "my-service-monitor"
+
 ```
 
 You can also use [port forwarding](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/) to access the Prometheus web.
 
 ```sh
 kubectl -n monitoring port-forward svc/prometheus-operated 9090:9090
+
 ```
 
 If the command runs successfully, you should be able to access the [Prometheus server UI](http://localhost:9090/) via localhost. From there you can check the live configuration and the discovered targets.
@@ -106,6 +112,7 @@ To check for events related to rejected resources, you can use the following com
 
 ```sh
 kubectl get events --field-selector=involvedObject.name="<name of PodMonitor resource>" -n "<namespace where resource is deployed>"
+
 ```
 
 If you've deployed the Prometheus Operator using kube-prometheus manifests, the `PrometheusOperatorRejectedResources` alert should fire when invalid objects are detected.
@@ -117,8 +124,10 @@ ServiceMonitors pointing to Services that do not exist (e.g. nothing matching `.
 
 If you use `.spec.selector.matchLabels` (instead of e.g. `.spec.selector.matchExpressions`), you can use this command to check for services matching the given label:
 
-```
-kubectl get services -l "$(kubectl get servicemonitors -n "<namespace of your ServiceMonitor>" "<name of your ServiceMonitor>" -o template='{{ $first := 1 }}{{ range $key, $value := .spec.selector.matchLabels }}{{ if eq $first 0 }},{{end}}{{ $key }}={{ $value }}{{ $first = 0 }}{{end}}')"
+
+
+```ubectl get services -l "$(kubectl get servicemonitors -n "<namespace of your ServiceMonitor>" "<name of your ServiceMonitor>" -o template='{{ $first := 1 }}{{ range $key, $value := .spec.selector.matchLabels }}{{ if eq $first 0 }},{{end}}{{ $key }}={{ $value }}{{ $first = 0 }}{{end}}')"
+
 ```
 
 Note: this command does not take namespaces into account. If your ServiceMonitor selects a single namespace or all namespaces, you can just add that to the `kubectl get services` command (using `-n $namespace` or `-A` for all namespaces).
@@ -131,7 +140,7 @@ Prometheus is installed, all looks good, however the `Targets` are all showing a
 
 Issue has been resolved by amending the webhooks to use `0.0.0.0` instead of `127.0.0.1`. Follow the below commands and it will update the webhooks which allows connections to all `clusterIP's` in all `namespaces` and not just `127.0.0.1`.
 
-**Update the kubelet service to include webhook and restart:**
+__Update the kubelet service to include webhook and restart:__
 
 ```sh
 KUBEADM_SYSTEMD_CONF=/etc/systemd/system/kubelet.service.d/10-kubeadm.conf
@@ -141,13 +150,15 @@ if ! grep -q "authentication-token-webhook=true" "$KUBEADM_SYSTEMD_CONF"; then
 fi
 systemctl daemon-reload
 systemctl restart kubelet
+
 ```
 
-**Modify the kube controller and kube scheduler to allow for reading data:**
+__Modify the kube controller and kube scheduler to allow for reading data:__
 
 ```sh
 sed -e "s/- --address=127.0.0.1/- --address=0.0.0.0/" -i /etc/kubernetes/manifests/kube-controller-manager.yaml
 sed -e "s/- --address=127.0.0.1/- --address=0.0.0.0/" -i /etc/kubernetes/manifests/kube-scheduler.yaml
+
 ```
 
 ### Using textual port number instead of port name
@@ -168,11 +179,12 @@ spec:
   ports:
   - name: web
     port: 8080
+
 ```
 
 We would then define the service monitor using `web` as the port, not `"8080"`. E.g.
 
-**CORRECT**
+__CORRECT__
 
 ```yaml mdox-exec="cat example/user-guides/getting-started/example-app-service-monitor.yaml"
 apiVersion: monitoring.coreos.com/v1
@@ -187,9 +199,10 @@ spec:
       app: example-app
   endpoints:
   - port: web
+
 ```
 
-**INCORRECT**
+__INCORRECT__
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
@@ -204,6 +217,7 @@ spec:
       app: example-app
   endpoints:
   - port: "8080"
+
 ```
 
 The incorrect example will give an error along these lines `spec.endpoints.port in body must be of type string: "integer"`
@@ -216,6 +230,7 @@ Check if several operators are running on the cluster:
 
 ```console
 kubectl get pods --all-namespaces | grep 'prom.*operator'
+
 ```
 
 Check the logs of the matching pods to see if they manage the same resource.
@@ -271,6 +286,7 @@ spec:
     - regex: prometheus_replica
       action: LabelDrop
     # Add more relabel configs here.
+
 ```
 
 For Prometheus/Prometheus resources with multiple shards, there's another modification to be done since the `cluster` label needs to include the shard ID for proper deduplication.
@@ -294,4 +310,5 @@ spec:
       targetLabel: __replica__
     - regex: prometheus_replica
       action: LabelDrop
+
 ```

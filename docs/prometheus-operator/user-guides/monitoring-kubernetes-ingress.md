@@ -25,6 +25,7 @@ We can quickly deploy this application using `kubectl`:
 
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/datawire/tour/refs/heads/master/k8s/tour.yaml
+
 ```
 
 Check the application's status and wait for it to start running:
@@ -34,6 +35,7 @@ $ kubectl get po --selector=app=tour
 
 NAME                    READY   STATUS    RESTARTS   AGE
 tour-6df995489d-lc9hs   2/2     Running   0          1m
+
 ```
 
 Now that we have an application running in Kubernetes, we need to expose it to the outside world. We will do this with Ambassador to take advantage of Envoy's robust metrics generation.
@@ -223,7 +225,7 @@ Now that we have an application running in Kubernetes, we need to expose it to t
    ambassador   LoadBalancer   10.96.110.170   34.233.165.XXX   80:33241/TCP  87m
    ```
 
-   **Note:** If you are running in a different Kubernetes environment that does not automatically create a load balancer (like minikube), you can still access Ambassador using the `NodePort` of the service (33241 in this example).
+   __Note:__ If you are running in a different Kubernetes environment that does not automatically create a load balancer (like minikube), you can still access Ambassador using the `NodePort` of the service (33241 in this example).
 
 3. Route traffic to your application
 
@@ -264,12 +266,12 @@ The Prometheus Operator creates Kubernetes Custom Resource Definitions (CRDs) so
 
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/master/bundle.yaml
+
 ```
 
 Once the Prometheus operator is running, we need to create a Prometheus instance. The Prometheus Operator manages Prometheus deployments with the `Prometheus` CRD. To create a Prometheus instance and Kubernetes service, copy the following YAML to a file called `prometheus.yaml` and deploy it with `kubectl`:
 
-```yaml
----
+## ```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -290,8 +292,7 @@ spec:
     protocol: TCP
     targetPort: 9090
   selector:
-    prometheus: prometheus
----
+##     prometheus: prometheus
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
@@ -309,20 +310,21 @@ spec:
   resources:
     requests:
       memory: 400Mi
+
 ```
 
-**Note:** The `externalUrl` and `routePrefix` fields allows for you to route requests to Prometheus through Ambassador on the `/prometheus` path. Replace `{AMBASSADOR_EXTERNAL_IP}` with the value from above.
+__Note:__ The `externalUrl` and `routePrefix` fields allows for you to route requests to Prometheus through Ambassador on the `/prometheus` path. Replace `{AMBASSADOR_EXTERNAL_IP}` with the value from above.
 
 ```sh
 kubectl apply -f prometheus.yaml
+
 ```
 
 We now have Prometheus running in the cluster and exposed through Ambassador. View the Prometheus UI by going to http://{AMBASSADOR_EXTERNAL_IP}/prometheus/graph from a web browser.
 
 Finally, we need tell Prometheus where to scrape metrics from. The Prometheus Operator easily manages this using a `ServiceMonitor` CRD. To tell Prometheus to scrape metrics from Ambassador's `/metrics` endpoint, we will use the Ambassador admin service and port `ambassador-admin`(8877). Copy the following YAML to a file called `ambassador-monitor.yaml` and apply it with `kubectl`:
 
-```yaml
----
+## ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -339,10 +341,12 @@ spec:
       service: ambassador-admin
   endpoints:
   - port: ambassador-admin
+
 ```
 
 ```sh
 kubectl apply -f ambassador-monitor.yaml
+
 ```
 
 Prometheus will now be configured to collect metrics from the `ambassador-admin` Kubernetes service with the internal address: `http://ambassador-admin:8877/metrics`.
@@ -353,7 +357,7 @@ If you go to `http://{AMBASSADOR_EXTERNAL_IP}/prometheus/targets` from a web bro
 
 Envoy's metrics data model is remarkably similar to that of Prometheus and uses the same three kinds of statistics (`Counters`, `Gauges`, and `Histograms`). This allows for Envoy to export dynamic and data-rich statistics that are immediately useable by Prometheus's analytical functions.
 
-**Notable Metrics:**
+__Notable Metrics:__
 
 | Metric Category           | Notable Metrics                                                                                                                         | Description                                                                                                                                                                                                                                                       |
 |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

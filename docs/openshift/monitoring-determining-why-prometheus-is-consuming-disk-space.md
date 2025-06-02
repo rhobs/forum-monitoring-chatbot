@@ -14,18 +14,14 @@ You can use the following measures when Prometheus consumes a lot of disk:
 
 * *Reduce the number of unique time series that are created* by reducing the number of unbound attributes that are assigned to user-defined metrics.
 +
-[NOTE]
-====
-Using attributes that are bound to a limited set of possible values reduces the number of potential key-value pair combinations.
-====
+# [NOTE]
+# Using attributes that are bound to a limited set of possible values reduces the number of potential key-value pair combinations.
 +
 * *Enforce limits on the number of samples that can be scraped* across user-defined projects. This requires cluster administrator privileges.
 
 .Prerequisites
 
-
 * You have access to the cluster as a user with the `cluster-admin` cluster role.
-
 
 * You have access to the cluster as a user with the `dedicated-admin` role.
 
@@ -40,14 +36,18 @@ The following example queries help to identify high cardinality metrics that mig
 
 * By running the following query, you can identify the ten jobs that have the highest number of scrape samples:
 +
+
 ```text
 topk(10, max by(namespace, job) (topk by(namespace, job) (1, scrape_samples_post_metric_relabeling)))
+
 ```
 +
 * By running the following query, you can pinpoint time series churn by identifying the ten jobs that have created the most time series data in the last hour:
 +
+
 ```text
 topk(10, sum by(namespace, job) (sum_over_time(scrape_series_added[1h])))
+
 ```
 
 . Investigate the number of unbound label values assigned to metrics with higher than expected scrape sample counts:
@@ -60,29 +60,35 @@ topk(10, sum by(namespace, job) (sum_over_time(scrape_series_added[1h])))
 
 cluster administrator:
 
-
 `dedicated-admin`:
 
 +
 .. Get the Prometheus API route URL by running the following command:
 +
+
 ```terminal
 $ HOST=$(oc -n openshift-monitoring get route prometheus-k8s -ojsonpath='{.status.ingress[].host}')
+
 ```
 +
 .. Extract an authentication token by running the following command:
 +
+
 ```terminal
 $ TOKEN=$(oc whoami -t)
+
 ```
 +
 .. Query the TSDB status for Prometheus by running the following command:
 +
+
 ```terminal
 $ curl -H "Authorization: Bearer $TOKEN" -k "https://$HOST/api/v1/status/tsdb"
+
 ```
 +
 .Example output
+
 ```terminal
 "status": "success","data":{"headStats":{"numSeries":507473,
 "numLabelPairs":19832,"chunkCount":946298,"minTime":1712253600010,
@@ -90,4 +96,5 @@ $ curl -H "Authorization: Bearer $TOKEN" -k "https://$HOST/api/v1/status/tsdb"
 [{"name":"etcd_request_duration_seconds_bucket","value":51840},
 {"name":"apiserver_request_sli_duration_seconds_bucket","value":47718},
 ...
+
 ```

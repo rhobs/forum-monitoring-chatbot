@@ -5,11 +5,9 @@
 In OpenShift, an administrator can enable alert routing for user-defined projects.
 This process consists of the following steps:
 
-
 * Enable alert routing for user-defined projects:
-** Use the default platform Alertmanager instance.
-** Use a separate Alertmanager instance only for user-defined projects.
-
+__ Use the default platform Alertmanager instance.
+__ Use a separate Alertmanager instance only for user-defined projects.
 
 * Enable alert routing for user-defined projects to use a separate Alertmanager instance.
 

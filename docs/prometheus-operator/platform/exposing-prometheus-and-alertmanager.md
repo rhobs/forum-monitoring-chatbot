@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: Guide to exposing Prometheus and Alertmanager in Kubernetes using NodePort, ClusterIP, or Ingress for external access.
----
+## description: Guide to exposing Prometheus and Alertmanager in Kubernetes using NodePort, ClusterIP, or Ingress for external access.
 
 <br>
 <div class="alert alert-info" role="alert">
@@ -35,6 +34,7 @@ spec:
   resources:
     requests:
       memory: 400Mi
+
 ```
 
 All Prometheus Pods are labeled with `prometheus: <prometheus-name>`. If the Prometheus object's name is `main`, the selector is `prometheus: main`. This means that the respective manifest for the `Service` must define the selector as `prometheus: main`.
@@ -54,6 +54,7 @@ spec:
     targetPort: web
   selector:
     prometheus: main
+
 ```
 
 After creating a Service with the above manifest, the web UI of Prometheus will be accessible by browsing to any of the worker nodes using `http://<node-ip>:30900/`.
@@ -70,6 +71,7 @@ spec:
   resources:
     requests:
       memory: 400Mi
+
 ```
 
 And the `Service`.
@@ -89,6 +91,7 @@ spec:
     targetPort: web
   selector:
     alertmanager: main
+
 ```
 
 The Alertmanager web UI will be available at `http://<node-ip>:30903/`.
@@ -97,8 +100,10 @@ The Alertmanager web UI will be available at `http://<node-ip>:30903/`.
 
 The Kubernetes API has a feature of forwarding requests from the API to a cluster internal Service. The general URL scheme to access these is:
 
-```
-http(s)://control-plane-host/api/v1/proxy/namespaces/<namespace>/services/<service-name>:<port-name-or-number>/
+
+
+```ttp(s)://control-plane-host/api/v1/proxy/namespaces/<namespace>/services/<service-name>:<port-name-or-number>/
+
 ```
 
 > For ease of use, use `kubectl proxy`. It proxies requests from a local address to the Kubernetes API server and handles authentication.
@@ -119,6 +124,7 @@ spec:
     targetPort: web
   selector:
     prometheus: main
+
 ```
 
 Prometheus and Alertmanager must be configured with the full URL at which they will be exposed. Therefore the Prometheus manifest requires an entry for `externalUrl`:
@@ -133,6 +139,7 @@ spec:
   resources:
     requests:
       memory: 400Mi
+
 ```
 
 > Note the `externalUrl` uses the host `127.0.0.1:8001`, which is how `kubectl proxy` exposes the Kubernetes API by default.
@@ -152,6 +159,7 @@ spec:
   resources:
     requests:
       memory: 400Mi
+
 ```
 
 And the respective Service:
@@ -170,6 +178,7 @@ spec:
     targetPort: web
   selector:
     alertmanager: main
+
 ```
 
 Then it will be available under http://127.0.0.1:8001/api/v1/proxy/namespaces/default/services/alertmanager-main:web/.
@@ -201,8 +210,7 @@ spec:
     protocol: TCP
     targetPort: web
   selector:
-    prometheus: main
----
+##     prometheus: main
 apiVersion: v1
 kind: Service
 metadata:
@@ -216,6 +224,7 @@ spec:
     targetPort: web
   selector:
     alertmanager: main
+
 ```
 
 A corresponding Ingress object would be:
@@ -240,6 +249,7 @@ spec:
           serviceName: alertmanager-main
           servicePort: 9093
         path: /alertmanager(/|$)(.*)
+
 ```
 
 Finally, the Prometheus and `Alertmanager` objects must be created, specifying the `externalUrl` at which they will be found.
@@ -253,8 +263,7 @@ spec:
   externalUrl: http://monitoring.my.systems/prometheus
   resources:
     requests:
-      memory: 400Mi
----
+##       memory: 400Mi
 apiVersion: monitoring.coreos.com/v1
 kind: Alertmanager
 metadata:
@@ -265,6 +274,7 @@ spec:
   resources:
     requests:
       memory: 400Mi
+
 ```
 
 > Note the path `/prometheus` at the end of the `externalUrl`, as specified in the `Ingress` object.

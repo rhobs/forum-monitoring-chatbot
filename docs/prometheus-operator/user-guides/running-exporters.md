@@ -39,13 +39,14 @@ spec:
     protocol: TCP
   selector:
     k8s-app: kube-state-metrics
+
 ```
 
 This Service targets all Pods with the label `k8s-app: kube-state-metrics`.
 
 ### Generic ServiceMonitor example
 
-This ServiceMonitor targets **all** Services with the label `k8s-app` (`spec.selector`) any value, in the namespaces `kube-system` and `monitoring` (`spec.namespaceSelector`).
+This ServiceMonitor targets __all__ Services with the label `k8s-app` (`spec.selector`) any value, in the namespaces `kube-system` and `monitoring` (`spec.namespaceSelector`).
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
@@ -66,6 +67,7 @@ spec:
   endpoints:
   - port: http-metrics
     interval: 15s
+
 ```
 
 ## Default Labels
@@ -106,16 +108,17 @@ Relabeling is a powerful feature to dynamically rewrite the label set of a targe
 
 > Relabel configs are applied to the label set of each target in order of their appearance in the configuration file.
 
-**Dropping label from a target**
+__Dropping label from a target__
 
 The following snippet drops the `pod` label from every metric scraped as part of the scrape job.
 
 ```yaml
 - action: labeldrop
   regex: pod
+
 ```
 
-**Adding label to a target**
+__Adding label to a target__
 
 The following snippet will add or replace the `team` label with the value `prometheus` for all the metrics scraped as part of this job.
 
@@ -123,9 +126,10 @@ The following snippet will add or replace the `team` label with the value `prome
 - action: replace
   replacement: prometheus
   targetLabel: team
+
 ```
 
-**Filtering targets by label**
+__Filtering targets by label__
 
 The following snippet will configure Prometheus to scrape metrics from the targets if they have the Kubernetes `team` label set to `prometheus` and the Kubernetes `datacenter` label not set to `west_europe`.
 
@@ -138,9 +142,10 @@ The following snippet will configure Prometheus to scrape metrics from the targe
   - __meta_kubernetes_pod_label_datacenter
   regex: west_europe
   action: drop
+
 ```
 
-**Full example**
+__Full example__
 
 The following `ServiceMonitor` configures Prometheus to only select targets that have the `team` label set to `prometheus` and exclude the ones that have `datacenter` set to `west_europe`. The same configuration may be used with a `PodMonitor`.
 
@@ -166,6 +171,7 @@ spec:
           - __meta_kubernetes_pod_label_datacenter
         regex: west_europe
         action: drop
+
 ```
 
 #### Metric Relabeling
@@ -174,7 +180,7 @@ Metric relabeling is applied to samples as the last step before ingestion, and i
 
 > Metric relabeling does not apply to automatically generated timeseries such as up.
 
-**Dropping metrics**
+__Dropping metrics__
 
 The following snippet drops any metric which name (`__name__`) matches the regex `container_tasks_state`.
 
@@ -184,9 +190,10 @@ metricRelabelings:
   - __name__
   regex: container_tasks_state
   action: drop
+
 ```
 
-**Dropping time series**
+__Dropping time series__
 
 The following snippet drops metrics where the `id` label matches the regex `/system.slice/var-lib-docker-containers.*-shm.mount`.
 
@@ -196,9 +203,10 @@ metricRelabelings:
   - id
   regex: '/system.slice/var-lib-docker-containers.*-shm.mount'
   action: drop
+
 ```
 
-**Full example**
+__Full example__
 
 The following `PodMonitor` configures Prometheus to drop metrics where the `id` label matches the regex `/system.slice/var-lib-docker-containers.*-shm.mount`. The same configuration could also be used with a `ServiceMonitor`
 
@@ -220,6 +228,7 @@ spec:
       - id
       regex: '/system.slice/var-lib-docker-containers.*-shm.mount'
       action: drop
+
 ```
 
 ## Troubleshooting
@@ -228,4 +237,4 @@ spec:
 
 See the ServiceMonitor Documentation:
 
-> By default and **before the version v0.19.0**, `ServiceMonitors` must be installed in the same namespace as the Prometheus resource. With the Prometheus Operator **v0.19.0 and above**, `ServiceMonitors` can be selected outside the Prometheus namespace via the `serviceMonitorNamespaceSelector` field of the Prometheus resource. The discovered targets may come from any namespace. This allows cross-namespace monitoring use cases, for example, for meta-monitoring.
+> By default and __before the version v0.19.0__, `ServiceMonitors` must be installed in the same namespace as the Prometheus resource. With the Prometheus Operator __v0.19.0 and above__, `ServiceMonitors` can be selected outside the Prometheus namespace via the `serviceMonitorNamespaceSelector` field of the Prometheus resource. The discovered targets may come from any namespace. This allows cross-namespace monitoring use cases, for example, for meta-monitoring.

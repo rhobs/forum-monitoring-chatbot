@@ -12,6 +12,7 @@ Each sample shows how to configure a corresponding `Secret` object that contains
 The following sample shows bearer token settings for a `Secret` object named `example-bearer-auth` in the `ns1` namespace:
 
 .Example bearer token secret
+
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -20,6 +21,7 @@ metadata:
   namespace: ns1
 stringData:
   token: <authentication_token> #<1>
+
 ```
 <1> Specify an authentication token.
 
@@ -27,6 +29,7 @@ The following sample shows bearer token authentication settings for a `ServiceMo
 
 [id="sample-yaml-bearer-token_{context}"]
 .Example bearer token authentication settings
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -43,14 +46,13 @@ spec:
   selector: 
     matchLabels:
       app: prometheus-example-app
+
 ```
 <1> The key that contains the authentication token in the specified `Secret` object.
 <2> The name of the `Secret` object that contains the authentication credentials.
 
-[IMPORTANT]
-=====
-Do not use `bearerTokenFile` to configure bearer token. If you use the `bearerTokenFile` configuration, the `ServiceMonitor` resource is rejected.
-=====
+# [IMPORTANT]
+# Do not use `bearerTokenFile` to configure bearer token. If you use the `bearerTokenFile` configuration, the `ServiceMonitor` resource is rejected.
 
 [id="sample-yaml-basic-auth_{context}"]
 ## Sample YAML for Basic authentication
@@ -58,6 +60,7 @@ Do not use `bearerTokenFile` to configure bearer token. If you use the `bearerTo
 The following sample shows Basic authentication settings for a `Secret` object named `example-basic-auth` in the `ns1` namespace:
 
 .Example Basic authentication secret
+
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -67,6 +70,7 @@ metadata:
 stringData:
   user: <basic_username> #<1>
   password: <basic_password>  #<2>
+
 ```
 <1> Specify a username for authentication.
 <2> Specify a password for authentication.
@@ -74,6 +78,7 @@ stringData:
 The following sample shows Basic authentication settings for a `ServiceMonitor` CRD. The example uses a `Secret` object named `example-basic-auth`:
 
 .Example Basic authentication settings
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -93,6 +98,7 @@ spec:
   selector: 
     matchLabels:
       app: prometheus-example-app
+
 ```
 <1> The key that contains the username in the specified `Secret` object.
 <2> The name of the `Secret` object that contains the Basic authentication.
@@ -104,6 +110,7 @@ spec:
 The following sample shows OAuth 2.0 settings for a `Secret` object named `example-oauth2` in the `ns1` namespace:
 
 .Example OAuth 2.0 secret
+
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -113,6 +120,7 @@ metadata:
 stringData:
   id: <oauth2_id> #<1>
   secret: <oauth2_secret> #<2>
+
 ```
 <1> Specify an Oauth 2.0 ID.
 <2> Specify an Oauth 2.0 secret.
@@ -120,6 +128,7 @@ stringData:
 The following sample shows OAuth 2.0 authentication settings for a `ServiceMonitor` CRD. The example uses a `Secret` object named `example-oauth2`:
 
 .Example OAuth 2.0 authentication settings
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -141,6 +150,7 @@ spec:
   selector: 
     matchLabels:
       app: prometheus-example-app
+
 ```
 <1> The key that contains the OAuth 2.0 ID in the specified `Secret` object.
 <2> The name of the `Secret` object that contains the OAuth 2.0 credentials.

@@ -18,24 +18,31 @@ You can employ the federation endpoint of your OpenShift cluster to make metrics
 
 . To retrieve a token from the OpenShift cluster, run the following command on it:
 +
+
 ```terminal
 $ oc whoami -t
+
 ```
 
 . Make the token available as a secret in the `openstack` namespace in the {rhoso} management cluster by running the following command:
 +
+
 ```terminal
 $ oc -n openstack create secret generic ocp-federated --from-literal=token=<the_token_fetched_previously>
+
 ```
 
 . To get the Prometheus federation route URL from your OpenShift cluster, run the following command:
 +
+
 ```terminal
 $ oc -n openshift-monitoring get route prometheus-k8s-federate -ojsonpath={'.status.ingress[].host'}
+
 ```
 
 . Write a manifest for a scrape configuration and save it as a file called `cluster-scrape-config.yaml`. As an example:
 +
+
 ```yaml
 apiVersion: monitoring.rhobs/v1alpha1
 kind: ScrapeConfig
@@ -59,6 +66,7 @@ spec:
   staticConfigs:
   - targets:
     - prometheus-k8s-federate-openshift-monitoring.apps.openshift.example # <4>
+
 ```
 <1> Add metrics here. In this example, only the metrics `kube_node_info`, `kube_persistentvolume_info`, and `cluster:master_nodes` are requested.
 <2> Insert the previously generated secret name here.
@@ -67,8 +75,10 @@ spec:
 
 . While connected to the {rhoso} management cluster, apply the manifest by running the following command:
 +
+
 ```terminal
 $ oc apply -f cluster-scrape-config.yaml
+
 ```
 
 After the config propagates, the cluster metrics are accessible for querying in the OpenShift UI in RHOSO.

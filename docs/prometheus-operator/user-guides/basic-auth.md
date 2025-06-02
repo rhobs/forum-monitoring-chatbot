@@ -30,6 +30,7 @@ spec:
   selector:
     matchLabels:
       app: myapp
+
 ```
 
 ```yaml
@@ -41,4 +42,5 @@ data:
   password: dG9vcg== # toor
   user: YWRtaW4= # admin
 type: Opaque
+
 ```

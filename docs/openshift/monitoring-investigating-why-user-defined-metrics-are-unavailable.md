@@ -6,9 +6,7 @@
 
 .Prerequisites
 
-
 * You have access to the cluster as a user with the `cluster-admin` role.
-
 
 * You have access to the cluster as a user with the `dedicated-admin` role.
 
@@ -22,58 +20,73 @@
 
 .. Verify that the project _does not_ have the `openshift.io/user-monitoring=false` label attached:
 +
+
 ```terminal
 $ oc get namespace ns1 --show-labels | grep 'openshift.io/user-monitoring=false'
+
 ```
 +
-[NOTE]
-====
-The default label set for user workload projects is `openshift.io/user-monitoring=true`. However, the label is not visible unless you manually apply it.
-====
+# [NOTE]
+# The default label set for user workload projects is `openshift.io/user-monitoring=true`. However, the label is not visible unless you manually apply it.
 
 .. Verify that the `ServiceMonitor` and `PodMonitor` resources _do not_ have the `openshift.io/user-monitoring=false` label attached. The following example checks the `prometheus-example-monitor` service monitor.
 +
+
 ```terminal
 $ oc -n ns1 get servicemonitor prometheus-example-monitor --show-labels | grep 'openshift.io/user-monitoring=false'
+
 ```
 
 .. If the label is attached, remove the label:
 +
 .Example of removing the label from the project
+
 ```terminal
 $ oc label namespace ns1 'openshift.io/user-monitoring-'
+
 ```
 +
 .Example of removing the label from the resource
+
 ```terminal
 $ oc -n ns1 label servicemonitor prometheus-example-monitor 'openshift.io/user-monitoring-'
+
 ```
 +
 .Example output
+
 ```terminal
 namespace/ns1 unlabeled
+
 ```
 
 . Check that the corresponding labels match in the service and `ServiceMonitor` resource configurations. The following examples use the `prometheus-example-app` service, the `prometheus-example-monitor` service monitor, and the `ns1` project.
 .. Obtain the label defined in the service.
 +
+
 ```terminal
 $ oc -n ns1 get service prometheus-example-app -o yaml
+
 ```
 +
 .Example output
+
 ```terminal
   labels:
     app: prometheus-example-app
+
 ```
 +
 .. Check that the `matchLabels` definition in the `ServiceMonitor` resource configuration matches the label output in the previous step.
 +
+
 ```terminal
 $ oc -n ns1 get servicemonitor prometheus-example-monitor -o yaml
+
 ```
 +
 .Example output
+
 ```yaml
 apiVersion: v1
 kind: ServiceMonitor
@@ -88,21 +101,23 @@ spec:
   selector:
     matchLabels:
       app: prometheus-example-app
+
 ```
 +
-[NOTE]
-====
-You can check service and `ServiceMonitor` resource labels as a developer with view permissions for the project.
-====
+# [NOTE]
+# You can check service and `ServiceMonitor` resource labels as a developer with view permissions for the project.
 
 . Inspect the logs for the Prometheus Operator in the `openshift-user-workload-monitoring` project.
 .. List the pods in the `openshift-user-workload-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-user-workload-monitoring get pods
+
 ```
 +
 .Example output
+
 ```terminal
 NAME                                   READY   STATUS    RESTARTS   AGE
 prometheus-operator-776fcbbd56-2nbfm   2/2     Running   0          132m
@@ -110,18 +125,23 @@ prometheus-user-workload-0             5/5     Running   1          132m
 prometheus-user-workload-1             5/5     Running   1          132m
 thanos-ruler-user-workload-0           3/3     Running   0          132m
 thanos-ruler-user-workload-1           3/3     Running   0          132m
+
 ```
 +
 .. Obtain the logs from the `prometheus-operator` container in the `prometheus-operator` pod. In the following example, the pod is called `prometheus-operator-776fcbbd56-2nbfm`:
 +
+
 ```terminal
 $ oc -n openshift-user-workload-monitoring logs prometheus-operator-776fcbbd56-2nbfm -c prometheus-operator
+
 ```
 +
 If there is a issue with the service monitor, the logs might include an error similar to this example:
 +
+
 ```terminal
 level=warn ts=2020-08-10T11:48:20.906739623Z caller=operator.go:1829 component=prometheusoperator msg="skipping servicemonitor" error="it accesses file system via bearer token file which Prometheus specification prohibits" servicemonitor=eagle/eagle namespace=openshift-user-workload-monitoring prometheus=user-workload
+
 ```
 
 . Review the target status for your endpoint on the *Metrics targets* page in the OpenShift web console UI.
@@ -134,12 +154,15 @@ level=warn ts=2020-08-10T11:48:20.906739623Z caller=operator.go:1829 component=p
 . Configure debug level logging for the Prometheus Operator in the `openshift-user-workload-monitoring` project.
 .. Edit the `user-workload-monitoring-config` `ConfigMap` object in the `openshift-user-workload-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-user-workload-monitoring edit configmap user-workload-monitoring-config
+
 ```
 +
 .. Add `logLevel: debug` for `prometheusOperator` under `data/config.yaml` to set the log level to `debug`:
 +
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -151,32 +174,37 @@ data:
     prometheusOperator:
       logLevel: debug
 # ...
+
 ```
 +
 .. Save the file to apply the changes. The affected `prometheus-operator` pod is automatically redeployed.
 +
 .. Confirm that the `debug` log-level has been applied to the `prometheus-operator` deployment in the `openshift-user-workload-monitoring` project:
 +
+
 ```terminal
 $ oc -n openshift-user-workload-monitoring get deploy prometheus-operator -o yaml |  grep "log-level"
+
 ```
 +
 .Example output
+
 ```terminal
         - --log-level=debug
+
 ```
 +
 Debug level logging will show all calls made by the Prometheus Operator.
 +
 .. Check that the `prometheus-operator` pod is running:
 +
+
 ```terminal
 $ oc -n openshift-user-workload-monitoring get pods
+
 ```
 +
-[NOTE]
-====
-If an unrecognized Prometheus Operator `loglevel` value is included in the config map, the `prometheus-operator` pod might not restart successfully.
-====
+# [NOTE]
+# If an unrecognized Prometheus Operator `loglevel` value is included in the config map, the `prometheus-operator` pod might not restart successfully.
 +
 .. Review the debug logs to see if the Prometheus Operator is using the `ServiceMonitor` resource. Review the logs for other related errors.

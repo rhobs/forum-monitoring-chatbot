@@ -1,12 +1,12 @@
 # Status subresource for Prometheus operator Workload CRDs
 
-* **Owners:**
+* __Owners:__
   * [simonpasquier](https://github.com/simonpasquier)
-* **Status:**
+* __Status:__
   * `Implemented`
-* **Related Tickets:**
+* __Related Tickets:__
   * [#3335](https://github.com/prometheus-operator/prometheus-operator/issues/3335)
-* **Other docs:**
+* __Other docs:__
   * N/A
 
 This proposal describes how we will extend the Prometheus operator workload Custom
@@ -111,7 +111,6 @@ type PrometheusStatus struct {
 	Selector string `json:"selector,omitempty"`
 }
 
-
 // Condition represents the state of the resources associated with the
 // Prometheus, Alertmanager or ThanosRuler resource.
 // +k8s:deepcopy-gen=true
@@ -167,6 +166,7 @@ const (
 	ConditionFalse    ConditionStatus = "False"
 	ConditionUnknown  ConditionStatus = "Unknown"
 )
+
 ```
 
 Example of a Prometheus resource's status for which all pods are up and running:
@@ -213,6 +213,7 @@ status:
   shards: 2
   unavailableReplicas: 0
   updatedReplicas: 4
+
 ```
 
 Example of a Prometheus resource's status for which some pods are missing due to scheduling issues:
@@ -259,6 +260,7 @@ status:
   shards: 2
   unavailableReplicas: 2
   updatedReplicas: 2
+
 ```
 
 ### Alertmanager
@@ -291,6 +293,7 @@ type AlertmanagerStatus struct {
 	// +optional
 	Conditions []Condition `json:"conditions,omitempty"`
 }
+
 ```
 
 ### Thanos Ruler
@@ -320,6 +323,7 @@ type ThanosRulerStatus struct {
 	// +optional
 	Conditions []Condition `json:"conditions,omitempty"`
 }
+
 ```
 
 ## Alternatives

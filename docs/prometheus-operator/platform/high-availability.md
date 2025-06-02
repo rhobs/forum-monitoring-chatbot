@@ -8,8 +8,7 @@ menu:
 lead: ""
 images: []
 draft: false
-description: High Availability is a must for the monitoring infrastructure.
----
+## description: High Availability is a must for the monitoring infrastructure.
 
 High availability is not only important for customer facing software, but if the monitoring infrastructure is not highly available, then there is a risk that operations people are not notified for alerts of the customer facing software. Therefore high availability must be just as thought through for the monitoring stack, as for anything else.
 

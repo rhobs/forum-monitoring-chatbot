@@ -14,6 +14,7 @@ This procedure shows, on an example, how an application developer can deploy an 
 
 . Add configuration for deploying a sample application:
 +
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -35,12 +36,13 @@ spec:
         image: ghcr.io/rhobs/prometheus-example-app:0.4.2
         ports:
         - name: web
-          containerPort: 8080
----
+##           containerPort: 8080
+
 ```
 
 . Add configuration for exposing the sample application as a service:
 +
+
 ```yaml
 kind: Service
 apiVersion: v1
@@ -54,12 +56,13 @@ spec:
     app: example-app
   ports:
   - name: web
-    port: 8080
----
+##     port: 8080
+
 ```
 
 . Add configuration for creating a service monitor for the sample application. This will add your application as a target for monitoring:
 +
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -74,18 +77,23 @@ spec:
       tier: frontend
   endpoints:
   - port: web
+
 ```
 
 . Apply the configuration file to the cluster:
 +
+
 ```terminal
 $ oc apply -f deploy.yaml
+
 ```
 
 . Forward a port to the Prometheus UI. In this example, port 9090 is used:
 +
+
 ```terminal
 $ oc port-forward -n openshift-user-workload-monitoring svc/prometheus-operated 9090
+
 ```
 
 . Navigate to the Prometheus UI at http://localhost:9090/targets to see the sample application being monitored.

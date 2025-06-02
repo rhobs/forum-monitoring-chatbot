@@ -78,8 +78,9 @@ We will add a new `mode` field that accepts either `StatefulSet` or `DaemonSet`,
 
 As pointed out in [Danny from GMP’s talk](https://www.youtube.com/watch?v=yk2aaAyxgKw), to make Prometheus Agent DaemonSet know which node it’s on, we can use [Kubernetes’ downward API](https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/). In `config-reloader` container, we can mount the node name as an environment variable like this:
 
-```
-containers:
+
+
+```ontainers:
 - name: config-reloader
   env:
   - name: NODE_NAME
@@ -87,18 +88,21 @@ containers:
       fieldRef:
         apiVersion: v1
         fieldPath: spec.nodeName
+
 ```
 
 ### 6.3. Targets filtering for pods (PodMonitor support):
 
 To filter pod targets, Danny’s talk has pointed out the best option is to use field selector:
 
-```
-kubernetes_sd_configs:
+
+
+```ubernetes_sd_configs:
 - role: pod
   selectors:
   - role: pod
     field: spec.nodeName=$NODE_NAME
+
 ```
 
 We'll go with this option, because it filters targets right at discovery time, and also because Kubernetes API server watch cache indexes pods by node name (as we can see in [Kubernetes codebase](https://github.com/kubernetes/kubernetes/blob/v1.30.0-rc.0/pkg/registry/core/pod/storage/storage.go#L91)).

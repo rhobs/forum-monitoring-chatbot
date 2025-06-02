@@ -17,6 +17,7 @@ For example, you can change the severity label of an alert, add a custom label, 
 . Add an `AlertRelabelConfig` resource to the YAML file.
 The following example modifies the `severity` setting to `critical` for the default platform `watchdog` alerting rule:
 +
+
 ```yaml
 apiVersion: monitoring.openshift.io/v1
 kind: AlertRelabelConfig
@@ -30,6 +31,7 @@ spec:
     targetLabel: severity # <4>
     replacement: critical # <5>
     action: Replace # <6>
+
 ```
 <1> Ensure that the namespace is `openshift-monitoring`.
 <2> The source labels for the values you want to modify.
@@ -40,13 +42,13 @@ spec:
 The default action is `Replace`.
 Other possible values are `Keep`, `Drop`, `HashMod`, `LabelMap`, `LabelDrop`, and `LabelKeep`.
 +
-[IMPORTANT]
-====
-You must create the `AlertRelabelConfig` object in the `openshift-monitoring` namespace. Otherwise, the alert label will not change.
-====
+# [IMPORTANT]
+# You must create the `AlertRelabelConfig` object in the `openshift-monitoring` namespace. Otherwise, the alert label will not change.
 
 . Apply the configuration file to the cluster:
 +
+
 ```terminal
 $ oc apply -f example-modified-alerting-rule.yaml
+
 ```

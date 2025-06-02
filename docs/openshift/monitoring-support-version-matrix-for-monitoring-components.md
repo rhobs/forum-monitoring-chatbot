@@ -23,7 +23,5 @@ The following matrix contains information about versions of monitoring component
 |4.12 |0.60.1 |2.39.1 |N/A |0.24.0 |2.6.0 |N/A |1.4.0 |0.28.1
 |===
 
-[NOTE]
-====
-The openshift-state-metrics agent and Telemeter Client are OpenShift-specific components. Therefore, their versions correspond with the versions of OpenShift.
-====
+# [NOTE]
+# The openshift-state-metrics agent and Telemeter Client are OpenShift-specific components. Therefore, their versions correspond with the versions of OpenShift.
